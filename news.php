@@ -129,7 +129,6 @@
                     // avec le <?php ci-dessus on retourne en mode php 
                 }// cette accolade ferme et termine la boucle while ouverte avant.
                 ?>
-
             </main>
         </div>
     </body>
