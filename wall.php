@@ -97,7 +97,7 @@
                         <h3>
                             <time><strong><?php echo $post['created'] ?> </strong></time>
                         </h3>
-                        <address><?php echo $user['alias'] ?></address>
+                        <address><?php echo $post['alias'] ?></address>
                         <div>
                             <p><?php echo $post['content'] ?></p>
 
