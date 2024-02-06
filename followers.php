@@ -56,12 +56,12 @@
                 while ($user = $lesInformations->fetch_assoc())
                 {
                     ?>
-                    <article>
-                        <img src="user.jpg" alt="blason"/>
-                        <h3><?php echo $user['alias'] ?></h3>
-                        <p><?php echo $user['id'] ?></p>
-                    </article>
-                <?php } ?>
+                        <article>
+                    <img src="user.jpg" alt="blason"/>
+                    <h3><a href="wall.php?user_id=<?php echo $user['id']; ?>"><?php echo $user['alias']; ?></a></h3>
+                    <p><?php echo $user['id']; ?></p>
+                </article>
+            <?php } ?>
                 
 
             </main>
