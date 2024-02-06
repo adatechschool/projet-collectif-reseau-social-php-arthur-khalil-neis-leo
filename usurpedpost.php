@@ -27,6 +27,7 @@ session_start();
                     <li><a href="followers.php?user_id=5">Mes suiveurs</a></li>
                     <li><a href="subscriptions.php?user_id=5">Mes abonnements</a></li>
                     <li><a href="registration.php?user_id=5">Inscription</a></li>
+                    <li><a href="login.php?user_id=5">Connection</a></li>
 
                 </ul>
 
@@ -82,16 +83,10 @@ session_start();
                         $authorId = intval($mysqli->real_escape_string($authorId));
                         $postContent = $mysqli->real_escape_string($postContent);
                         //Etape 4 : construction de la requete
-                        $lInstructionSql = $query = "INSERT INTO posts "
-                            . "(id, user_id, content, created, permalink, post_id) "
-                            . "VALUES (NULL, "
-                            . $authorId . ", "
-                            . "'" . $postContent . "', "
-                            . "NOW(), "
-                            . "NULL, "
-                            . "NULL);";
-                 
-                        //echo $lInstructionSql;
+                        $lInstructionSql = "INSERT INTO posts(id, user_id, content, created, permalink, post_id)
+                                            VALUES (NULL, {$authorId}, '{$postContent}', NOW(), NULL, {$_SESSION['connected_id']})";
+                        
+                        // echo $lInstructionSql;
                         // Etape 5 : execution
                         $ok = $mysqli->query($lInstructionSql);
                         if ( ! $ok)
