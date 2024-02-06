@@ -41,7 +41,8 @@
              * Documentation : https://www.php.net/manual/fr/reserved.variables.get.php
              * ... mais en résumé c'est une manière de passer des informations à la page en ajoutant des choses dans l'url
              */
-            $userId =intval($_GET['user_id']);
+            $userId = isUserConnected() ? getConnectedUser()['id'] : 0; // Set a default user ID (e.g., 0) if not connected
+
             ?>
             <?php
             /**
@@ -105,7 +106,7 @@
                         <h3>
                             <time><strong><?php echo $post['created'] ?> </strong></time>
                         </h3>
-                        <address><?php echo $post['author_name'] ?></address>
+                        <address><a href="wall.php?user_id=<?php echo $post['id'] ?>"><?php echo $post['author_name'] ?></a></address>
                         <div>
                             <p><?php echo $post['content'] ?></p>
 
