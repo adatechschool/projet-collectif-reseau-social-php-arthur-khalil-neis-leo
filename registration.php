@@ -100,15 +100,8 @@
                         </dl>
                         <input type='submit'>
                     </form>
-<<<<<<< HEAD
-                    <br>
-                     <p>
-=======
-                     <br>
-                    <p>
->>>>>>> 3c0e690585bd4465ca0d04737ed71f5ac39c45e5
-                        Déjà un compte ?
-                        <a href='login.php'><strong>Connectez-vous.</strong></a>
+                      <br>
+                      <p> Déjà un compte ?</p> <a href='login.php'><strong>Connectez-vous.</strong></a>
                     </p>
                 </article>
             </main>
