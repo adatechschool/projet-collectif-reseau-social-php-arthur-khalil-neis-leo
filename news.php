@@ -1,6 +1,3 @@
-<?php
-include 'config.php';
-?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -80,6 +77,7 @@ include 'config.php';
                 $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
                 //verification
                 include 'config.php';
+                include 'userco.php';
 
                 // Etape 2: Poser une question à la base de donnée et récupérer ses informations
                 // cette requete vous est donnée, elle est complexe mais correcte, 

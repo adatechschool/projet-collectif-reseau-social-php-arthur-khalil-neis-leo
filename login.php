@@ -1,7 +1,3 @@
-<?php
-session_start();
-include 'config.php';
-?>
 <!doctype html>
 <html lang="fr">
     <head>

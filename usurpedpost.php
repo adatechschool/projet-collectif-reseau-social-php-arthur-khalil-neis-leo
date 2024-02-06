@@ -1,7 +1,3 @@
-<?php
-
-include 'config.php';
-?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -53,6 +49,7 @@ include 'config.php';
                      * BD
                      */
                     include 'config.php';
+                    include 'userco.php';
                     /**
                      * Récupération de la liste des auteurs
                      */
