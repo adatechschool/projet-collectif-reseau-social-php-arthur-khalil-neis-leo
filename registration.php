@@ -99,6 +99,11 @@
                         </dl>
                         <input type='submit'>
                     </form>
+                     <br>
+                    <p>
+                        Déjà un compte ?
+                        <a href='login.php'><strong>Connectez-vous.</strong></a>
+                    </p>
                 </article>
             </main>
         </div>
