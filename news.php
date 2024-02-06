@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -15,10 +18,6 @@
                 <a href="feed.php?user_id=5">Flux</a>
                 <a href="tags.php?tag_id=1">Mots-clés</a>
                 <a href="usurpedpost.php?user_id=5">Ecrire</a>
-                <?php if (isset($_SESSION['connected_user'])): ?>
-        <span>Connecté en tant que: <?php echo $_SESSION['connected_user']['alias']; ?></span><?php endif; ?>
-          
-
             </nav>
             <nav id="user">
                 <a href="#">▾ Profil</a>
@@ -28,7 +27,6 @@
                     <li><a href="subscriptions.php?user_id=5">Mes abonnements</a></li>
                     <li><a href="registration.php?user_id=5">Inscription</a></li>
                     <li><a href="login.php?user_id=5">connexion</a></li>
-
                 </ul>
             </nav>
         </header>
@@ -37,8 +35,10 @@
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
-                    <p>Sur cette page vous trouverez les derniers messages de
-                        tous les utilisatrices du site.</p>
+                    <p>Sur cette page vous trouverez les derniers messages de tous les utilisatrices du site.</p>
+                    <?php if (isset($_SESSION['connected_user'])): ?>
+                        <span>Connecté en tant que: <?php echo $_SESSION['connected_user']['alias']; ?></span>
+                    <?php endif; ?>
                 </section>
             </aside>
             <main>
@@ -66,21 +66,21 @@
                 <?php
                 /*
                   // C'est ici que le travail PHP commence
-                  // Votre mission si vous l'acceptez est de chercher dans la base
-                  // de données la liste des 5 derniers messsages (posts) et
+                  // Votre mission si vous l'acceptez est de chercher dans la base
+                  // de données la liste des 5 derniers messages (posts) et
                   // de l'afficher
                   // Documentation : les exemples https://www.php.net/manual/fr/mysqli.query.php
                   // plus généralement : https://www.php.net/manual/fr/mysqli.query.php
                  */
 
-                // Etape 1: Ouvrir une connexion avec la base de donnée.
+                // Etape 1: Ouvrir une connexion avec la base de données.
                 $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
                 //verification
                 include 'config.php';
                 include 'userco.php';
 
-                // Etape 2: Poser une question à la base de donnée et récupérer ses informations
-                // cette requete vous est donnée, elle est complexe mais correcte, 
+                // Etape 2: Poser une question à la base de données et récupérer ses informations
+                // cette requête vous est donnée, elle est complexe mais correcte, 
                 // si vous ne la comprenez pas c'est normal, passez, on y reviendra
                 $laQuestionEnSql = "
                     SELECT posts.content,
@@ -102,24 +102,24 @@
                 if ( ! $lesInformations)
                 {
                     echo "<article>";
-                    echo("Échec de la requete : " . $mysqli->error);
-                    echo("<p>Indice: Vérifiez la requete  SQL suivante dans phpmyadmin<code>$laQuestionEnSql</code></p>");
+                    echo("Échec de la requête : " . $mysqli->error);
+                    echo("<p>Indice: Vérifiez la requête  SQL suivante dans phpmyadmin<code>$laQuestionEnSql</code></p>");
                     exit();
                 }
 
-                // Etape 3: Parcourir ces données et les ranger bien comme il faut dans du html
-                // NB: à chaque tour du while, la variable post ci dessous reçois les informations du post suivant.
+                // Etape 3: Parcourir ces données et les ranger bien comme il faut dans du HTML
+                // NB: à chaque tour du while, la variable post ci-dessous reçoit les informations du post suivant.
                 while ($post = $lesInformations->fetch_assoc())
                 {
-                    //la ligne ci-dessous doit etre supprimée mais regardez ce 
-                    //qu'elle affiche avant pour comprendre comment sont organisées les information dans votre 
+                    // la ligne ci-dessous doit être supprimée mais regardez ce 
+                    // qu'elle affiche avant pour comprendre comment sont organisées les informations dans votre 
                     // echo "<pre>" . print_r($post, 1) . "</pre>";
 
                     // @todo : Votre mission c'est de remplacer les AREMPLACER par les bonnes valeurs
                     // ci-dessous par les bonnes valeurs cachées dans la variable $post 
                     // on vous met le pied à l'étrier avec created
                     // 
-                    // avec le ? > ci-dessous on sort du mode php et on écrit du html comme on veut... mais en restant dans la boucle
+                    // avec le ? > ci-dessous on sort du mode PHP et on écrit du HTML comme on veut... mais en restant dans la boucle
                     ?>
                     <article>
                         <h3>
@@ -127,14 +127,15 @@
                         </h3>
                         <address><?php echo $post['content'] ?></address>
                         <div>
-                            <a href="wall.php?user_id=<?php echo $post['id'] ?>"><?php echo $post['author_name'] ?></a>                        <footer>
+                            <a href="wall.php?user_id=<?php echo $post['id'] ?>"><?php echo $post['author_name'] ?></a>
+                        <footer>
                             <small>♥ <?php echo $post['like_number'] ?> </small>
                             <a href="">#<?php echo $post['taglist'] ?></a>
                         </footer>
                     </article>
                     <?php
-                    // avec le <?php ci-dessus on retourne en mode php 
-                }// cette accolade ferme et termine la boucle while ouverte avant.
+                    // avec le <?php ci-dessus on retourne en mode PHP 
+                } // cette accolade ferme et termine la boucle while ouverte avant.
                 ?>
             </main>
         </div>
