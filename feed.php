@@ -21,6 +21,8 @@
                     <li><a href="settings.php?user_id=5">Paramètres</a></li>
                     <li><a href="followers.php?user_id=5">Mes suiveurs</a></li>
                     <li><a href="subscriptions.php?user_id=5">Mes abonnements</a></li>
+                    <li><a href="registration.php?user_id=5">Inscription</a></li>
+
                 </ul>
 
             </nav>
