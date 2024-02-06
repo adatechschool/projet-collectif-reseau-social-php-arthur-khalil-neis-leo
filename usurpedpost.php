@@ -82,15 +82,16 @@ session_start();
                         $authorId = intval($mysqli->real_escape_string($authorId));
                         $postContent = $mysqli->real_escape_string($postContent);
                         //Etape 4 : construction de la requete
-                        $lInstructionSql = "INSERT INTO posts "
-                                . "(id, user_id, content, created) "
-                                . "VALUES (NULL, "
-                                . $authorId . ", "
-                                . "'" . $postContent . "', "
-                                . "NOW());"
-                        
-                                ;
-                        echo $lInstructionSql;
+                        $lInstructionSql = $query = "INSERT INTO posts "
+                            . "(id, user_id, content, created, permalink, post_id) "
+                            . "VALUES (NULL, "
+                            . $authorId . ", "
+                            . "'" . $postContent . "', "
+                            . "NOW(), "
+                            . "NULL, "
+                            . "NULL);";
+                 
+                        //echo $lInstructionSql;
                         // Etape 5 : execution
                         $ok = $mysqli->query($lInstructionSql);
                         if ( ! $ok)
