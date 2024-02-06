@@ -41,7 +41,7 @@
              * Documentation : https://www.php.net/manual/fr/reserved.variables.get.php
              * ... mais en résumé c'est une manière de passer des informations à la page en ajoutant des choses dans l'url
              */
-            $userId = isUserConnected() ? getConnectedUser()['id'] : 0; // Set a default user ID (e.g., 0) if not connected
+            $userId =intval($_GET['user_id']); // Set a default user ID (e.g., 0) if not connected
 
             ?>
             <?php
