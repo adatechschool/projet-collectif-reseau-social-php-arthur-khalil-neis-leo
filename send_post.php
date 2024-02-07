@@ -1,6 +1,4 @@
-<?php
-session_start();
-?>
+<?php  include 'config.php' ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -35,7 +33,7 @@ session_start();
     <div id="wrapper">
         <aside>
             <h2>Présentation</h2>
-            <p>Sur cette page, vous pouvez poster un message en tant que <?php echo $_SESSION['connected_user']['alias']; ?></p>
+            <p id="SurCettePage">Sur cette page, vous pouvez poster un message en tant que <?php echo $_SESSION['connected_user']['alias']; ?></p>
         </aside>
 
         <main>
@@ -45,7 +43,7 @@ session_start();
                 /**
                  * BD
                  */
-                include 'config.php';
+               
                 include 'userco.php';
 
                 /**
