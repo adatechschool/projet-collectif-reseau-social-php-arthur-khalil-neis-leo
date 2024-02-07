@@ -28,8 +28,6 @@
             <li><a href="registration.php?user_id=5">Inscription</a></li>
             <li><a href="login.php?user_id=5">Connection</a></li>
         </ul>
-        <!-- Moved the user information block here -->
-        <span><?php if (isset($_SESSION['connected_user'])) echo 'Connecté en tant que: ' . $_SESSION['connected_user']['alias']; ?></span>
     </nav>
 </header>
 <div id="wrapper">

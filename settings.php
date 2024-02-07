@@ -18,8 +18,7 @@
                 <a href="feed.php?user_id=5">Flux</a>
                 <a href="tags.php?tag_id=1">Mots-clés</a>
                 <a href="usurpedpost.php?user_id=5">Ecrire</a>
-                <?php if (isset($_SESSION['connected_user'])): ?>
-        <span>Connecté en tant que: <?php echo $_SESSION['connected_user']['alias']; ?></span><?php endif; ?>
+
           
             </nav>
             <nav id="user">
