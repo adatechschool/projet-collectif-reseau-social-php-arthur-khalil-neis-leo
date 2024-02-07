@@ -50,8 +50,13 @@ include 'config.php';
                     (n° <?php echo $user['id'] ?>)
                 </p>
             <?php endif; ?>
-            <!-- Le bouton "Écrire un message" redirige vers la page d'écriture de message en incluant l'ID de l'utilisateur -->
-            <button onclick="location.href='send_post.php?user_id=<?php echo $userId; ?>'">Écrire un message</button>
+           <!-- Le bouton "Écrire un message" redirige vers la page d'écriture de message en incluant l'ID de l'utilisateur -->
+<?php if ($userId != $_SESSION['connected_user']['id']) : ?>
+    <button onclick="FollowUser(<?php echo $postId; ?>)">Follow</button>
+<?php else : ?>
+    <button onclick="location.href='send_post.php?user_id=<?php echo $userId; ?>'">Écrire un message</button>
+<?php endif; ?>
+
         </section>
     </aside>
     <main>
