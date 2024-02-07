@@ -50,13 +50,15 @@
             <!-- The user information is now displayed below the profile information -->
             <span><?php if (isset($_SESSION['connected_user'])) echo 'Connecté en tant que: ' . $_SESSION['connected_user']['alias']; ?></span>
             <!-- Added the "Write Message" button -->
+            <br>
+            <br>
             <button onclick="location.href='send_post.php'">Écrire un message</button>
         </section>
     </aside>
     <main>
         <?php
         $laQuestionEnSql = "
-            SELECT posts.content, posts.created, users.alias as author_name, 
+            SELECT posts.id, posts.content, posts.created, users.alias as author_name, 
             COUNT(likes.id) as like_number, GROUP_CONCAT(DISTINCT tags.label) AS taglist 
             FROM posts
             JOIN users ON  users.id=posts.user_id
@@ -85,6 +87,14 @@
                 <footer>
                     <small>♥ <?php echo $post['like_number'] ?></small>
                     <a href="">#<?php echo $post['taglist'] ?></a>
+
+                    <!-- Form for deleting the post -->
+                    <form action="" method="post">
+                        <!-- Pass the post ID to be deleted -->
+                        <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
+                        <!-- Button for post deletion -->
+                        <button type="submit" name="delete_post" onclick="return confirm('Are you sure you want to delete this post?')">Erase Post</button>
+                    </form>
                 </footer>
             </article>
         <?php } ?>
@@ -92,7 +102,9 @@
 </div>
 
 <!-- Added the message box -->
+
 <div id="messageBox" style="display: none;">
+            <br>
     <h2>Écrire un message</h2>
     <form action="wall.php" method="post">
         <input type="hidden" name="author_id" value="<?php echo $_SESSION['connected_id']; ?>">
