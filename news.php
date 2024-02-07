@@ -14,7 +14,7 @@
             <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/></a>
             <nav id="menu">
                 <a href="news.php">Actualités</a>
-                <a href="wall.php?user_id=5">Mur</a>
+                <a href="wall.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mur</a>
                 <a href="feed.php?user_id=5">Flux</a>
                 <a href="tags.php?tag_id=1">Mots-clés</a>
                 <a href="usurpedpost.php?user_id=5">Ecrire</a>
@@ -127,7 +127,9 @@
                         </h3>
                         <address><?php echo $post['content'] ?></address>
                         <div>
-                            <a href="wall.php?user_id=<?php echo $post['id'] ?>"><?php echo $post['author_name'] ?></a>
+                        <a href="wall.php?user_id=<?php echo $post['id'] ?>"><?php echo $post['author_name'] ?></a>
+
+
                         <footer>
                             <small>♥ <?php echo $post['like_number'] ?> </small>
                             <a href="">#<?php echo $post['taglist'] ?></a>

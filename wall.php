@@ -1,5 +1,5 @@
 <?php
-    include 'config.php';
+include 'config.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -14,58 +14,58 @@
     <img src="resoc.jpg" alt="Logo de notre réseau social"/>
     <nav id="menu">
         <a href="news.php">Actualités</a>
-        <a href="wall.php?user_id=5">Mur</a>
-        <a href="feed.php?user_id=5">Flux</a>
+        <a href="wall.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mur</a>
+
+        <a href="feed.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Flux</a>
         <a href="tags.php?tag_id=1">Mots-clés</a>
-        <a href="usurpedpost.php?user_id=5">Ecrire</a>
+        <a href="usurpedpost.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Ecrire</a>
     </nav>
     <nav id="user">
         <a href="#">Profil</a>
         <ul>
-            <li><a href="settings.php?user_id=5">Paramètres</a></li>
-            <li><a href="followers.php?user_id=5">Mes suiveurs</a></li>
-            <li><a href="subscriptions.php?user_id=5">Mes abonnements</a></li>
-            <li><a href="registration.php?user_id=5">Inscription</a></li>
-            <li><a href="login.php?user_id=5">Connection</a></li>
+            <li><a href="settings.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Paramètres</a></li>
+            <li><a href="followers.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Mes suiveurs</a></li>
+            <li><a href="subscriptions.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Mes abonnements</a></li>
+            <li><a href="registration.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Inscription</a></li>
+            <li><a href="login.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Connection</a></li>
         </ul>
     </nav>
 </header>
 <div id="wrapper">
     <?php
-    $userId = intval($_GET['user_id']); // Set a default user ID (e.g., 0) if not connected
-    include 'userco.php';
-    ?>
-    <aside>
-        <?php
-        $laQuestionEnSql = "SELECT * FROM users WHERE id= '$userId' ";
+    $userId = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
+    if ($userId != 0) {
+        // Si un ID d'utilisateur est spécifié dans l'URL, récupérer les informations de cet utilisateur
+        $laQuestionEnSql = "SELECT * FROM users WHERE id = '$userId'";
         $lesInformations = $mysqli->query($laQuestionEnSql);
         $user = $lesInformations->fetch_assoc();
-        ?>
+    }
+    ?>
+    <aside>
         <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
         <section>
             <h3>Présentation</h3>
-            <p>Sur cette page vous trouverez tous les messages de l'utilisatrice : <?php echo $user['alias'] ?>
-                (n° <?php echo $user['id'] ?>)
-            </p>
-            <!-- The user information is now displayed below the profile information -->
-            <span><?php if (isset($_SESSION['connected_user'])) echo 'Connecté en tant que: ' . $_SESSION['connected_user']['alias']; ?></span>
-            <!-- Added the "Write Message" button -->
-            <br>
-            <br>
-            <button onclick="location.href='send_post.php'">Écrire un message</button>
+            <?php if ($userId != 0) : ?>
+                <p>Sur cette page vous trouverez tous les messages de l'utilisatrice : <?php echo $user['alias'] ?>
+                    (n° <?php echo $user['id'] ?>)
+                </p>
+            <?php endif; ?>
+            <!-- Le bouton "Écrire un message" redirige vers la page d'écriture de message en incluant l'ID de l'utilisateur -->
+            <button onclick="location.href='send_post.php?user_id=<?php echo $userId; ?>'">Écrire un message</button>
         </section>
     </aside>
     <main>
         <?php
+        // Sélection des publications de l'utilisateur dont l'ID est spécifié dans l'URL
         $laQuestionEnSql = "
             SELECT posts.id, posts.content, posts.created, users.alias as author_name, 
             COUNT(likes.id) as like_number, GROUP_CONCAT(DISTINCT tags.label) AS taglist 
             FROM posts
-            JOIN users ON  users.id=posts.user_id
+            JOIN users ON  users.id = posts.user_id
             LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
             LEFT JOIN tags       ON posts_tags.tag_id  = tags.id 
             LEFT JOIN likes      ON likes.post_id  = posts.id 
-            WHERE posts.user_id='$userId' 
+            WHERE posts.user_id = '$userId' 
             GROUP BY posts.id
             ORDER BY posts.created DESC  
         ";
@@ -79,7 +79,6 @@
                 <h3>
                     <time><strong><?php echo $post['created'] ?> </strong></time>
                 </h3>
-                <!-- The user information is now displayed below the profile information -->
                 <address><a href="wall.php?user_id=<?php echo $post['id'] ?>"><?php echo $post['author_name'] ?></a></address>
                 <div>
                     <p><?php echo $post['content'] ?></p>
@@ -87,24 +86,15 @@
                 <footer>
                     <small>♥ <?php echo $post['like_number'] ?></small>
                     <a href="">#<?php echo $post['taglist'] ?></a>
-
-                    <!-- Form for deleting the post -->
-                    <form action="" method="post">
-                        <!-- Pass the post ID to be deleted -->
-                        <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
-                        <!-- Button for post deletion -->
-                        <button type="submit" name="delete_post" onclick="return confirm('Are you sure you want to delete this post?')">Erase Post</button>
-                    </form>
                 </footer>
             </article>
         <?php } ?>
     </main>
 </div>
 
-<!-- Added the message box -->
-
+<!-- Boîte de message -->
 <div id="messageBox" style="display: none;">
-            <br>
+    <br>
     <h2>Écrire un message</h2>
     <form action="wall.php" method="post">
         <input type="hidden" name="author_id" value="<?php echo $_SESSION['connected_id']; ?>">
