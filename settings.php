@@ -1,3 +1,6 @@
+<?php
+    include 'config.php';
+?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -58,7 +61,6 @@
                 /**
                  * Etape 2: se connecter à la base de donnée
                  */
-                include 'config.php';
                 include 'userco.php';
 
                 /**

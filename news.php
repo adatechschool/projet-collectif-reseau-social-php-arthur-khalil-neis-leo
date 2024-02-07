@@ -1,5 +1,5 @@
 <?php
-session_start();
+    include 'config.php';
 ?>
 <!doctype html>
 <html lang="fr">
@@ -76,7 +76,7 @@ session_start();
                 // Etape 1: Ouvrir une connexion avec la base de données.
                 $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
                 //verification
-                include 'config.php';
+
                 include 'userco.php';
 
                 // Etape 2: Poser une question à la base de données et récupérer ses informations

@@ -1,3 +1,6 @@
+<?php
+    include 'config.php';
+?>
 <!doctype html>
 <html lang="fr">
 <head>
@@ -33,7 +36,6 @@
     <div id="wrapper">
         <?php
         $tagId = intval($_GET['tag_id']);
-        include 'config.php';
         include 'userco.php';
         ?>
 

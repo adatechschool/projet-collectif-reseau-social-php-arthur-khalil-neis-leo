@@ -1,3 +1,6 @@
+<?php
+    include 'config.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -32,7 +35,6 @@
 <div id="wrapper">
     <?php
     $userId = intval($_GET['user_id']); // Set a default user ID (e.g., 0) if not connected
-    include 'config.php';
     include 'userco.php';
     ?>
     <aside>
