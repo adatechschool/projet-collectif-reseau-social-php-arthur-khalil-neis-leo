@@ -1,6 +1,9 @@
 <?php
     include 'config.php';
+
+
 ?>
+
 <!doctype html>
 <html lang="fr">
     <head>
@@ -78,24 +81,36 @@
                 //verification
 
                 include 'userco.php';
+                include 'likes.php';
+
 
                 // Etape 2: Poser une question à la base de données et récupérer ses informations
                 // cette requête vous est donnée, elle est complexe mais correcte, 
                 // si vous ne la comprenez pas c'est normal, passez, on y reviendra
                 $laQuestionEnSql = "
-                    SELECT posts.content,
-                    posts.created,
-                    users.alias as author_name, 
-                    users.id, 
-                    count(likes.id) as like_number,  
-                    GROUP_CONCAT(DISTINCT tags.label) AS taglist 
-                    FROM posts
-                    JOIN users ON  users.id=posts.user_id
-                    LEFT JOIN posts_tags ON posts_tags.post_id = posts.id
-                    LEFT JOIN tags       ON posts_tags.tag_id  = tags.id 
-                    LEFT JOIN likes      ON likes.post_id  = posts.id 
-                    GROUP BY posts.id
-                    ORDER BY posts.created DESC  
+                SELECT 
+                posts.id as post_id, 
+                posts.content,
+                posts.created,
+                posts.likes,
+                users.alias as author_name, 
+                users.id as author_id, 
+                GROUP_CONCAT(DISTINCT tags.label) AS taglist 
+                FROM 
+                    posts
+                JOIN 
+                    users ON users.id = posts.user_id
+                LEFT JOIN 
+                    posts_tags ON posts_tags.post_id = posts.id
+                LEFT JOIN 
+                    tags ON posts_tags.tag_id = tags.id 
+                LEFT JOIN 
+                    likes ON likes.post_id = posts.id 
+                GROUP BY 
+                    posts.id
+                ORDER BY 
+                    posts.created DESC  
+            
                     ";
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 // Vérification
@@ -131,9 +146,17 @@
 
 
                         <footer>
-                            <small>♥ <?php echo $post['like_number'] ?> </small>
+                            <small>
+                                ♥ <?php echo $post['likes'] ?>
+
+                                <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                                    <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
+                                    <button type="submit" name="like_button">J'aime</button>
+                                </form>
+                            </small>
                             <a href="">#<?php echo $post['taglist'] ?></a>
                         </footer>
+
                     </article>
                     <?php
                     // avec le <?php ci-dessus on retourne en mode PHP 
