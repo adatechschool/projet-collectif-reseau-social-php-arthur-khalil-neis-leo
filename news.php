@@ -1,93 +1,55 @@
 <?php
-    include 'config.php';
-
+include 'config.php';
 
 ?>
 
 <!doctype html>
 <html lang="fr">
-    <head>
-        <meta charset="utf-8">
-        <title>ReSoC - Actualités</title> 
-        <meta name="author" content="Julien Falconnet">
-        <link rel="stylesheet" href="style.css"/>
-    </head>
-    <body>
-        <header>
-            <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/></a>
-            <nav id="menu">
-                <a href="news.php">Actualités</a>
-                <a href="wall.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mur</a>
-                <a href="feed.php?user_id=5">Flux</a>
-                <a href="tags.php?tag_id=1">Mots-clés</a>
-                <a href="usurpedpost.php?user_id=5">Ecrire</a>
-            </nav>
-            <nav id="user">
-                <a href="#">▾ Profil</a>
-                <ul>
-                    <li><a href="settings.php?user_id=5">Paramètres</a></li>
-                    <li><a href="followers.php?user_id=5">Mes suiveurs</a></li>
-                    <li><a href="subscriptions.php?user_id=5">Mes abonnements</a></li>
-                    <li><a href="registration.php?user_id=5">Inscription</a></li>
-                    <li><a href="login.php?user_id=5">connexion</a></li>
-                </ul>
-            </nav>
-        </header>
-        <div id="wrapper">
-            <aside>
-                <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
-                <section>
-                    <h3>Présentation</h3>
-                    <p>Sur cette page vous trouverez les derniers messages de tous les utilisatrices du site.</p>
-                    <?php if (isset($_SESSION['connected_user'])): ?>
-                        <span>Connecté en tant que: <?php echo $_SESSION['connected_user']['alias']; ?></span>
-                    <?php endif; ?>
-                </section>
-            </aside>
-            <main>
-                <!-- L'article qui suit est un exemple pour la présentation et 
-                  @todo: doit etre retiré -->
-                <!-- <article>
-                    <h3>
-                        <time datetime='2020-02-01 11:12:13' >31 février 2010 à 11h12</time>
-                    </h3>
-                    <address>par AreTirer</address>
-                    <div>
-                        <p>Ceci est un paragraphe</p>
-                        <p>Ceci est un autre paragraphe</p>
-                        <p>... de toutes manières il faut supprimer cet 
-                            article et le remplacer par des informations en 
-                            provenance de la base de donnée (voir ci-dessous)</p>
-                    </div>                                            
-                    <footer>
-                        <small>♥1012 </small>
-                        <a href="">#lorem</a>,
-                        <a href="">#piscitur</a>,
-                    </footer>
-                </article>                -->
+<head>
+    <meta charset="utf-8">
+    <title>ReSoC - Actualités</title>
+    <meta name="author" content="Julien Falconnet">
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<header>
+    <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/></a>
+    <nav id="menu">
+        <a href="news.php">Actualités</a>
+        <a href="wall.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mur</a>
+        <a href="feed.php?user_id=5">Flux</a>
+        <a href="tags.php?tag_id=1">Mots-clés</a>
+        <a href="usurpedpost.php?user_id=5">Ecrire</a>
+    </nav>
+    <nav id="user">
+        <a href="#">▾ Profil</a>
+        <ul>
+            <li><a href="settings.php?user_id=5">Paramètres</a></li>
+            <li><a href="followers.php?user_id=5">Mes suiveurs</a></li>
+            <li><a href="subscriptions.php?user_id=5">Mes abonnements</a></li>
+            <li><a href="registration.php?user_id=5">Inscription</a></li>
+            <li><a href="login.php?user_id=5">connexion</a></li>
+        </ul>
+    </nav>
+</header>
+<div id="wrapper">
+    <aside>
+        <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+        <section>
+            <h3>Présentation</h3>
+            <p>Sur cette page vous trouverez les derniers messages de tous les utilisatrices du site.</p>
+            <?php if (isset($_SESSION['connected_user'])): ?>
+                <span>Connecté en tant que: <?php echo $_SESSION['connected_user']['alias']; ?></span>
+            <?php endif; ?>
+        </section>
+    </aside>
+    <main>
+        <?php
+        $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
+        include 'userco.php';
+        include 'likes.php';
 
-                <?php
-                /*
-                  // C'est ici que le travail PHP commence
-                  // Votre mission si vous l'acceptez est de chercher dans la base
-                  // de données la liste des 5 derniers messages (posts) et
-                  // de l'afficher
-                  // Documentation : les exemples https://www.php.net/manual/fr/mysqli.query.php
-                  // plus généralement : https://www.php.net/manual/fr/mysqli.query.php
-                 */
-
-                // Etape 1: Ouvrir une connexion avec la base de données.
-                $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
-                //verification
-
-                include 'userco.php';
-                include 'likes.php';
-
-
-                // Etape 2: Poser une question à la base de données et récupérer ses informations
-                // cette requête vous est donnée, elle est complexe mais correcte, 
-                // si vous ne la comprenez pas c'est normal, passez, on y reviendra
-                $laQuestionEnSql = "
+        $laQuestionEnSql = "
                 SELECT 
                 posts.id as post_id, 
                 posts.content,
@@ -110,59 +72,43 @@
                     posts.id
                 ORDER BY 
                     posts.created DESC  
-            
-                    ";
-                $lesInformations = $mysqli->query($laQuestionEnSql);
-                // Vérification
-                if ( ! $lesInformations)
-                {
-                    echo "<article>";
-                    echo("Échec de la requête : " . $mysqli->error);
-                    echo("<p>Indice: Vérifiez la requête  SQL suivante dans phpmyadmin<code>$laQuestionEnSql</code></p>");
-                    exit();
-                }
+            ";
 
-                // Etape 3: Parcourir ces données et les ranger bien comme il faut dans du HTML
-                // NB: à chaque tour du while, la variable post ci-dessous reçoit les informations du post suivant.
-                while ($post = $lesInformations->fetch_assoc())
-                {
-                    // la ligne ci-dessous doit être supprimée mais regardez ce 
-                    // qu'elle affiche avant pour comprendre comment sont organisées les informations dans votre 
-                    // echo "<pre>" . print_r($post, 1) . "</pre>";
+        $lesInformations = $mysqli->query($laQuestionEnSql);
 
-                    // @todo : Votre mission c'est de remplacer les AREMPLACER par les bonnes valeurs
-                    // ci-dessous par les bonnes valeurs cachées dans la variable $post 
-                    // on vous met le pied à l'étrier avec created
-                    // 
-                    // avec le ? > ci-dessous on sort du mode PHP et on écrit du HTML comme on veut... mais en restant dans la boucle
-                    ?>
-                    <article>
-                        <h3>
-                            <time><strong><?php echo $post['created'] ?> </strong></time>
-                        </h3>
-                        <address><?php echo $post['content'] ?></address>
-                        <div>
-                        <a href="wall.php?user_id=<?php echo $post['id'] ?>"><?php echo $post['author_name'] ?></a>
+        if (!$lesInformations) {
+            echo "<article>";
+            echo("Échec de la requête : " . $mysqli->error);
+            echo("<p>Indice: Vérifiez la requête  SQL suivante dans phpmyadmin<code>$laQuestionEnSql</code></p>");
+            exit();
+        }
 
+        while ($post = $lesInformations->fetch_assoc()) {
+            ?>
+            <article>
+                <h3>
+                    <time><strong><?php echo $post['created'] ?> </strong></time>
+                </h3>
+                <address><?php echo $post['content'] ?></address>
+                <div>
+                    <a href="wall.php?user_id=<?php echo $post['author_id'] ?>"><?php echo $post['author_name'] ?></a>
+                    <footer>
+                        <small>
+                            ♥ <?php echo $post['likes'] ?>
 
-                        <footer>
-                            <small>
-                                ♥ <?php echo $post['likes'] ?>
-
-                                <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                                    <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
-                                    <button type="submit" name="like_button">J'aime</button>
-                                </form>
-                            </small>
-                            <a href="">#<?php echo $post['taglist'] ?></a>
-                        </footer>
-
-                    </article>
-                    <?php
-                    // avec le <?php ci-dessus on retourne en mode PHP 
-                } // cette accolade ferme et termine la boucle while ouverte avant.
-                ?>
-            </main>
-        </div>
-    </body>
+                            <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                                <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
+                                <button type="submit" name="like_dislike_button">J'aime</button>
+                            </form>
+                        </small>
+                        <a href="">#<?php echo $post['taglist'] ?></a>
+                    </footer>
+                </div>
+            </article>
+            <?php
+        }
+        ?>
+    </main>
+</div>
+</body>
 </html>
