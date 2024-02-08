@@ -58,7 +58,7 @@ include 'config.php';
         <?php
         // Sélection des publications de l'utilisateur dont l'ID est spécifié dans l'URL
         $laQuestionEnSql = "
-            SELECT posts.id, posts.content, posts.created, users.alias as author_name, 
+            SELECT posts.id, posts.content, posts.created, posts.likes, users.alias as author_name, 
             COUNT(likes.id) as like_number, GROUP_CONCAT(DISTINCT tags.label) AS taglist 
             FROM posts
             JOIN users ON  users.id = posts.user_id
@@ -84,7 +84,7 @@ include 'config.php';
                     <p><?php echo $post['content'] ?></p>
                 </div>
                 <footer>
-                    <small>♥ <?php echo $post['like_number'] ?></small>
+                    <small>♥ <?php echo $post['likes'] ?></small>
                     <a href="">#<?php echo $post['taglist'] ?></a>
                 </footer>
             </article>

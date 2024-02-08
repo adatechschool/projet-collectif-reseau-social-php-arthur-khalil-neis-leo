@@ -60,6 +60,7 @@
             $laQuestionEnSql = "
                 SELECT posts.content,
                 posts.created,
+                posts.likes,
                 users.alias as author_name,  
                 users.id,
                 count(likes.id) as like_number,  
@@ -91,7 +92,7 @@
                         <p><?php echo $post['content'] ?></p>
                     </div>                                            
                     <footer>
-                        <small>♥ <?php echo $post['like_number'] ?></small>
+                        <small>♥ <?php echo $post['likes'] ?></small>
                         <a href="">#<?php echo $post['taglist'] ?></a>
                     </footer>
                 </article>
