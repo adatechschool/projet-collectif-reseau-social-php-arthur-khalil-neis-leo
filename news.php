@@ -1,6 +1,5 @@
 <?php
 include 'config.php';
-
 ?>
 
 <!doctype html>
@@ -93,15 +92,27 @@ include 'config.php';
                 <div>
                     <a href="wall.php?user_id=<?php echo $post['author_id'] ?>"><?php echo $post['author_name'] ?></a>
                     <footer>
-                        <small>
-                            <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                                <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
-                                <button type="submit" name="like_dislike_button" class="like_button">♥</button>
-                                <?php echo $post['likes'] ?>
-                            </form>
-                        </small>
-                        <a href="">#<?php echo $post['taglist'] ?></a>
-                    </footer>
+    <small>
+        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
+            <button type="submit" name="like_dislike_button" class="like_button">♥</button>
+            <?php echo $post['likes'] ?>
+        </form>
+    </small>
+    <?php foreach (explode(',', $post['taglist']) as $tag): ?>
+        <?php
+            // Requête SQL pour obtenir l'ID numérique du tag
+            $tagQuery = "SELECT id FROM tags WHERE label = '$tag'";
+            $tagResult = $mysqli->query($tagQuery);
+            $tagRow = $tagResult->fetch_assoc();
+            $tagId = $tagRow['id'];
+        ?>
+        <a href="tags.php?tag_id=<?php echo $tagId; ?>"><?php echo '#' . $tag; ?></a>
+    <?php endforeach; ?>
+</footer>
+
+ 
+
                 </div>
             </article>
             <?php

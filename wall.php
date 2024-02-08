@@ -24,7 +24,9 @@ include 'config.php';
 
         <a href="feed.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Flux</a>
         <a href="tags.php?tag_id=1">Mots-clés</a>
-        <a href="usurpedpost.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Ecrire</a>
+        <?php if ($_SESSION['connected_user']['id'] !== 0) : ?>
+            <a href="usurpedpost.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Ecrire</a>
+        <?php endif; ?>
     </nav>
     <nav id="user">
         <a href="#">Profil</a>
@@ -67,39 +69,44 @@ include 'config.php';
 </aside>
     <main>
         <?php
-        // Sélection des publications de l'utilisateur dont l'ID est spécifié dans l'URL
-        $laQuestionEnSql = "
-            SELECT posts.id, posts.content, posts.created, posts.likes, users.alias as author_name, 
-            COUNT(likes.id) as like_number, GROUP_CONCAT(DISTINCT tags.label) AS taglist 
-            FROM posts
-            JOIN users ON  users.id = posts.user_id
-            LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
-            LEFT JOIN tags       ON posts_tags.tag_id  = tags.id 
-            LEFT JOIN likes      ON likes.post_id  = posts.id 
-            WHERE posts.user_id = '$userId' 
-            GROUP BY posts.id
-            ORDER BY posts.created DESC  
-        ";
-        $lesInformations = $mysqli->query($laQuestionEnSql);
-        if (!$lesInformations) {
-            echo("Échec de la requête : " . $mysqli->error);
-        }
-        while ($post = $lesInformations->fetch_assoc()) {
-            ?>
-            <article>
-                <h3>
-                    <time><strong><?php echo $post['created'] ?> </strong></time>
-                </h3>
-                <address><a href="wall.php?user_id=<?php echo $post['id'] ?>"><?php echo $post['author_name'] ?></a></address>
-                <div>
-                    <p><?php echo $post['content'] ?></p>
-                </div>
-                <footer>
-                    <small>♥ <?php echo $post['likes'] ?></small>
-                    <a href="">#<?php echo $post['taglist'] ?></a>
-                </footer>
-            </article>
-        <?php } ?>
+        // Si l'utilisateur est connecté en tant que Guest (id 0)
+        if ($_SESSION['connected_user']['id'] === 0) {
+            echo '<p>Connectez-vous pour voir votre mur de messages.</p>';
+        } else {
+            // Sélection des publications de l'utilisateur dont l'ID est spécifié dans l'URL
+            $laQuestionEnSql = "
+                SELECT posts.id, posts.content, posts.created, posts.likes, users.alias as author_name, 
+                COUNT(likes.id) as like_number, GROUP_CONCAT(DISTINCT tags.label) AS taglist 
+                FROM posts
+                JOIN users ON  users.id = posts.user_id
+                LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
+                LEFT JOIN tags       ON posts_tags.tag_id  = tags.id 
+                LEFT JOIN likes      ON likes.post_id  = posts.id 
+                WHERE posts.user_id = '$userId' 
+                GROUP BY posts.id
+                ORDER BY posts.created DESC  
+            ";
+            $lesInformations = $mysqli->query($laQuestionEnSql);
+            if (!$lesInformations) {
+                echo("Échec de la requête : " . $mysqli->error);
+            }
+            while ($post = $lesInformations->fetch_assoc()) {
+                ?>
+                <article>
+                    <h3>
+                        <time><strong><?php echo $post['created'] ?> </strong></time>
+                    </h3>
+                    <address><a href="wall.php?user_id=<?php echo $post['id'] ?>"><?php echo $post['author_name'] ?></a></address>
+                    <div>
+                        <p><?php echo $post['content'] ?></p>
+                    </div>
+                    <footer>
+                        <small>♥ <?php echo $post['likes'] ?></small>
+                        <a href="">#<?php echo $post['taglist'] ?></a>
+                    </footer>
+                </article>
+            <?php }
+        } ?>
     </main>
 </div>
 

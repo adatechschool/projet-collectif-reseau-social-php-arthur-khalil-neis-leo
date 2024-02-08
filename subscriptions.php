@@ -1,6 +1,14 @@
 <?php
-    include 'config.php';
+include 'config.php';
+include 'userco.php'; // Assurez-vous d'inclure ce fichier pour accéder à $_SESSION
+
+if (!isset($_SESSION['connected_user'])) {
+    // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
+    header("Location: login.php");
+    exit();
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -18,7 +26,6 @@
             <a href="feed.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Flux</a>
             <a href="tags.php?tag_id=1">Mots-clés</a>
             <a href="usurpedpost.php?user_id=5">Ecrire</a>
-
         </nav>
         <nav id="user">
             <a href="#">Profil</a>
@@ -27,8 +34,7 @@
                 <li><a href="followers.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mes suiveurs</a></li>
                 <li><a href="subscriptions.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mes abonnements</a></li>
                 <li><a href="registration.php?user_id=5">Inscription</a></li>
-                <li><a href="login.php?user_id=5">Connection</a></li>
-
+                <li><a href="login.php?user_id=5">Connexion</a></li>
             </ul>
         </nav>
     </header>
@@ -47,7 +53,8 @@
         <main class='contacts'>
             <?php
             // Etape 1: récupérer l'id de l'utilisateur
-            $userId = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
+            $userId = isset($_GET['user_id']) ? intval($_GET['user_id']) : $_SESSION['connected_user']['id'];
+
             // Etape 3: récupérer le nom de l'utilisateur
             $laQuestionEnSql = "
                 SELECT users.* 
@@ -56,10 +63,13 @@
                 WHERE followers.following_user_id='$userId'
                 GROUP BY users.id
             ";
+
             $lesInformations = $mysqli->query($laQuestionEnSql);
+
             if (!$lesInformations) {
                 echo("Échec de la requête : " . $mysqli->error);
             }
+
             // Etape 4: à vous de jouer
             //@todo: faire la boucle while de parcours des abonnés et mettre les bonnes valeurs ci-dessous 
             while ($user = $lesInformations->fetch_assoc()) {
