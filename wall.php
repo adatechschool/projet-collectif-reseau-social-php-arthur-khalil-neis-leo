@@ -1,115 +1,130 @@
 <?php
 include 'config.php';
+include 'userco.php';
+
+// Vérifier si un utilisateur est connecté
+if (!isset($_SESSION['connected_user'])) {
+    // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
+    header("Location: login.php");
+    exit();
+}
+
+// Récupérer l'ID de l'utilisateur connecté
+$connectedUserId = $_SESSION['connected_user']['id'];
+
+// Récupérer le mur de l'utilisateur (ses propres messages)
+$laQuestionEnSql = "
+    SELECT 
+    posts.id as post_id, 
+    posts.content,
+    posts.created,
+    posts.likes,
+    users.alias as author_name, 
+    users.id as author_id, 
+    GROUP_CONCAT(DISTINCT tags.label) AS taglist 
+    FROM 
+        posts
+    JOIN 
+        users ON users.id = posts.user_id
+    LEFT JOIN 
+        posts_tags ON posts_tags.post_id = posts.id
+    LEFT JOIN 
+        tags ON posts_tags.tag_id = tags.id 
+    LEFT JOIN 
+        likes ON likes.post_id = posts.id 
+    WHERE 
+        users.id = '$connectedUserId'
+    GROUP BY 
+        posts.id
+    ORDER BY 
+        posts.created DESC  
+";
+
+$lesInformations = $mysqli->query($laQuestionEnSql);
+
+if (!$lesInformations) {
+    echo "<article>";
+    echo("Échec de la requête : " . $mysqli->error);
+    echo("<p>Indice: Vérifiez la requête SQL suivante dans phpmyadmin<code>$laQuestionEnSql</code></p>");
+    exit();
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <title>ReSoC - Mur</title>
+    <title>ReSoC - Mur de l'utilisateur</title>
     <meta name="author" content="Julien Falconnet">
     <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-<header>
-    <img src="resoc.jpg" alt="Logo de notre réseau social"/>
-    <nav id="menu">
-        <a href="news.php">Actualités</a>
-        <a href="wall.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mur</a>
-
-        <a href="feed.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Flux</a>
-        <a href="tags.php?tag_id=1">Mots-clés</a>
-        <a href="usurpedpost.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Ecrire</a>
-    </nav>
-    <nav id="user">
-        <a href="#">Profil</a>
-        <ul>
-            <li><a href="settings.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Paramètres</a></li>
-            <li><a href="followers.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Mes suiveurs</a></li>
-            <li><a href="subscriptions.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Mes abonnements</a></li>
-            <li><a href="registration.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Inscription</a></li>
-            <li><a href="login.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Connection</a></li>
-        </ul>
-    </nav>
-</header>
-<div id="wrapper">
-    <?php
-    $userId = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
-    if ($userId != 0) {
-        // Si un ID d'utilisateur est spécifié dans l'URL, récupérer les informations de cet utilisateur
-        $laQuestionEnSql = "SELECT * FROM users WHERE id = '$userId'";
-        $lesInformations = $mysqli->query($laQuestionEnSql);
-        $user = $lesInformations->fetch_assoc();
-    }
-    ?>
-    <aside>
-        <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
-        <section>
-            <h3>Présentation</h3>
-            <?php if ($userId != 0) : ?>
-                <p>Sur cette page vous trouverez tous les messages de l'utilisatrice : <?php echo $user['alias'] ?>
-                    (n° <?php echo $user['id'] ?>)
+    <header>
+        <img src="resoc.jpg" alt="Logo de notre réseau social"/>
+        <nav id="menu">
+            <a href="news.php">Actualités</a>
+            <a href="wall.php?user_id=<?php echo $connectedUserId; ?>">Mur</a>
+            <a href="feed.php?user_id=<?php echo $connectedUserId; ?>">Flux</a>
+            <a href="tags.php?tag_id=1">Mots-clés</a>
+            <a href="usurpedpost.php?user_id=<?php echo $connectedUserId; ?>">Ecrire</a>
+        </nav>
+        <nav id="user">
+            <a href="#">Profil</a>
+            <ul>
+                <li><a href="settings.php?user_id=<?php echo $connectedUserId; ?>">Paramètres</a></li>
+                <li><a href="followers.php?user_id=<?php echo $connectedUserId; ?>">Mes suiveurs</a></li>
+                <li><a href="subscriptions.php?user_id=<?php echo $connectedUserId; ?>">Mes abonnements</a></li>
+                <li><a href="registration.php?user_id=5">Inscription</a></li>
+                <li><a href="login.php?user_id=5">Connexion</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div id="wrapper">
+        <aside>
+            <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+            <section>
+                <h3>Présentation</h3>
+                <p>
+                    Sur cette page, vous trouverez les messages de l'utilisatrice n° <?php echo $connectedUserId; ?>.
                 </p>
-            <?php endif; ?>
-            <!-- Le bouton "Écrire un message" redirige vers la page d'écriture de message en incluant l'ID de l'utilisateur -->
-            <button onclick="location.href='send_post.php?user_id=<?php echo $userId; ?>'">Écrire un message</button>
-        </section>
-    </aside>
-    <main>
-        <?php
-        // Sélection des publications de l'utilisateur dont l'ID est spécifié dans l'URL
-        $laQuestionEnSql = "
-            SELECT posts.id, posts.content, posts.created, posts.likes, users.alias as author_name, 
-            COUNT(likes.id) as like_number, GROUP_CONCAT(DISTINCT tags.label) AS taglist 
-            FROM posts
-            JOIN users ON  users.id = posts.user_id
-            LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
-            LEFT JOIN tags       ON posts_tags.tag_id  = tags.id 
-            LEFT JOIN likes      ON likes.post_id  = posts.id 
-            WHERE posts.user_id = '$userId' 
-            GROUP BY posts.id
-            ORDER BY posts.created DESC  
-        ";
-        $lesInformations = $mysqli->query($laQuestionEnSql);
-        if (!$lesInformations) {
-            echo("Échec de la requête : " . $mysqli->error);
-        }
-        while ($post = $lesInformations->fetch_assoc()) {
+            </section>
+        </aside>
+        <main>
+            <?php
+            while ($post = $lesInformations->fetch_assoc()) {
             ?>
-            <article>
-                <h3>
-                    <time><strong><?php echo $post['created'] ?> </strong></time>
-                </h3>
-                <address><a href="wall.php?user_id=<?php echo $post['id'] ?>"><?php echo $post['author_name'] ?></a></address>
-                <div>
-                    <p><?php echo $post['content'] ?></p>
-                </div>
-                <footer>
-                    <small>♥ <?php echo $post['likes'] ?></small>
-                    <a href="">#<?php echo $post['taglist'] ?></a>
-                </footer>
-            </article>
-        <?php } ?>
-    </main>
-</div>
-
-<!-- Boîte de message -->
-<div id="messageBox" style="display: none;">
-    <br>
-    <h2>Écrire un message</h2>
-    <form action="wall.php" method="post">
-        <input type="hidden" name="author_id" value="<?php echo $_SESSION['connected_id']; ?>">
-        <textarea name="message"></textarea>
-        <br>
-        <input type="submit" value="Post">
-    </form>
-</div>
-
-<script>
-    function toggleMessageBox() {
-        var messageBox = document.getElementById("messageBox");
-        messageBox.style.display = (messageBox.style.display === "none") ? "block" : "none";
-    }
-</script>
-
+                <article>
+                    <h3>
+                        <time><strong><?php echo $post['created'] ?> </strong></time>
+                    </h3>
+                    <address><?php echo $post['content'] ?></address>
+                    <div>
+                        <a href="wall.php?user_id=<?php echo $post['author_id'] ?>"><?php echo $post['author_name'] ?></a>
+                        <footer>
+                            <small>
+                                <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                                    <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
+                                    <button type="submit" name="like_dislike_button" class="like_button">♥</button>
+                                    <?php echo $post['likes'] ?>
+                                </form>
+                            </small>
+                            <?php foreach (explode(',', $post['taglist']) as $tag): ?>
+                                <?php
+                                    // Requête SQL pour obtenir l'ID numérique du tag
+                                    $tagQuery = "SELECT id FROM tags WHERE label = '$tag'";
+                                    $tagResult = $mysqli->query($tagQuery);
+                                    $tagRow = $tagResult->fetch_assoc();
+                                    $tagId = $tagRow['id'];
+                                ?>
+                                <a href="tags.php?tag_id=<?php echo $tagId; ?>"><?php echo '#' . $tag; ?></a>
+                            <?php endforeach; ?>
+                        </footer>
+                    </div>
+                </article>
+            <?php
+            }
+            ?>
+        </main>
+    </div>
 </body>
 </html>
