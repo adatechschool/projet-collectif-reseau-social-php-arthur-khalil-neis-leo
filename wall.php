@@ -4,11 +4,7 @@ include 'config.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-    <div>
-        <?php echo $_SERVER['PHP_SELF'];
-              echo $connectedUser; ?>
-        
-    </div>
+    
 <head>
     <meta charset="utf-8">
     <title>ReSoC - Mur</title>
@@ -58,6 +54,10 @@ include 'config.php';
                 (n° <?php echo $user['id'] ?>)
             </p>
         <?php endif; ?>
+        <!-- Le bouton "Écrire un message" redirige vers la page d'écriture de message en incluant l'ID de l'utilisateur -->
+
+    <button onclick="location.href='send_post.php?user_id=<?php echo $userId; ?>'">Écrire un message</button>
+
         <!-- Formulaire d'abonnement à l'utilisateur -->
 
         <form id="subscribe-form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -102,7 +102,7 @@ include 'config.php';
                     </div>
                     <footer>
                         <small>♥ <?php echo $post['likes'] ?></small>
-                        <a href="">#<?php echo $post['taglist'] ?></a>
+                        <a href="tags.php?tag_id=<?php echo urlencode($post['taglist']); ?>">#<?php echo $post['taglist'] ?></a>
                     </footer>
                 </article>
             <?php }

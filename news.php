@@ -111,8 +111,6 @@ include 'config.php';
     <?php endforeach; ?>
 </footer>
 
- 
-
                 </div>
             </article>
             <?php
