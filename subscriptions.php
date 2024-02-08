@@ -1,3 +1,6 @@
+<?php
+    include 'config.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -12,7 +15,7 @@
         <nav id="menu">
             <a href="news.php">Actualités</a>
             <a href="wall.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mur</a>
-            <a href="feed.php?user_id=5">Flux</a>
+            <a href="feed.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Flux</a>
             <a href="tags.php?tag_id=1">Mots-clés</a>
             <a href="usurpedpost.php?user_id=5">Ecrire</a>
 
@@ -20,9 +23,9 @@
         <nav id="user">
             <a href="#">Profil</a>
             <ul>
-                <li><a href="settings.php?user_id=5">Paramètres</a></li>
-                <li><a href="followers.php?user_id=5">Mes suiveurs</a></li>
-                <li><a href="subscriptions.php?user_id=5">Mes abonnements</a></li>
+                <li><a href="settings.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Paramètres</a></li>
+                <li><a href="followers.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mes suiveurs</a></li>
+                <li><a href="subscriptions.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mes abonnements</a></li>
                 <li><a href="registration.php?user_id=5">Inscription</a></li>
                 <li><a href="login.php?user_id=5">Connection</a></li>
 
@@ -45,8 +48,6 @@
             <?php
             // Etape 1: récupérer l'id de l'utilisateur
             $userId = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
-            // Etape 2: se connecter à la base de données
-            include 'config.php';
             // Etape 3: récupérer le nom de l'utilisateur
             $laQuestionEnSql = "
                 SELECT users.* 
