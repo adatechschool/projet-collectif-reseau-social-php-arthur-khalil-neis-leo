@@ -1,8 +1,14 @@
 <?php
 include 'config.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+    <div>
+        <?php echo $_SERVER['PHP_SELF'];
+              echo $connectedUser; ?>
+        
+    </div>
 <head>
     <meta charset="utf-8">
     <title>ReSoC - Mur</title>
@@ -42,23 +48,23 @@ include 'config.php';
     }
     ?>
     <aside>
-        <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
-        <section>
-            <h3>Présentation</h3>
-            <?php if ($userId != 0) : ?>
-                <p>Sur cette page vous trouverez tous les messages de l'utilisatrice : <?php echo $user['alias'] ?>
-                    (n° <?php echo $user['id'] ?>)
-                </p>
-            <?php endif; ?>
-           <!-- Le bouton "Écrire un message" redirige vers la page d'écriture de message en incluant l'ID de l'utilisateur -->
-<?php if ($userId != $_SESSION['connected_user']['id']) : ?>
-    <button onclick="FollowUser(<?php echo $postId; ?>)">Follow</button>
-<?php else : ?>
-    <button onclick="location.href='send_post.php?user_id=<?php echo $userId; ?>'">Écrire un message</button>
-<?php endif; ?>
+    <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+    <section>
+        <h3>Présentation</h3>
+        <?php if ($userId != 0) : ?>
+            <p>Sur cette page vous trouverez tous les messages de l'utilisatrice : <?php echo $user['alias'] ?>
+                (n° <?php echo $user['id'] ?>)
+            </p>
+        <?php endif; ?>
+        <!-- Formulaire d'abonnement à l'utilisateur -->
 
-        </section>
-    </aside>
+        <form id="subscribe-form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <input type="hidden" name="user_id" value="<?php echo $userId; ?>">
+            <!-- Le bouton "Devenir Suiveur" soumet le formulaire pour suivre l'utilisateur -->
+            <button id="follow" type="submit">Devenir Suiveur</button>
+        </form>
+    </section>
+</aside>
     <main>
         <?php
         // Sélection des publications de l'utilisateur dont l'ID est spécifié dans l'URL

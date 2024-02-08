@@ -105,7 +105,7 @@ include 'config.php';
                 </div>
             </article>
             <?php
-        }
+        } 
         ?>
     </main>
 </div>
