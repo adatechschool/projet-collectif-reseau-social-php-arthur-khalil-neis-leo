@@ -94,11 +94,10 @@ include 'config.php';
                     <a href="wall.php?user_id=<?php echo $post['author_id'] ?>"><?php echo $post['author_name'] ?></a>
                     <footer>
                         <small>
-                            ♥ <?php echo $post['likes'] ?>
-
                             <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                                 <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
-                                <button type="submit" name="like_dislike_button">J'aime</button>
+                                <button type="submit" name="like_dislike_button" class="like_button">♥</button>
+                                <?php echo $post['likes'] ?>
                             </form>
                         </small>
                         <a href="">#<?php echo $post['taglist'] ?></a>
