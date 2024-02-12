@@ -2,6 +2,7 @@
 include 'config.php';
 
 
+
 // Vérifier si l'utilisateur est connecté
 if (isset($_SESSION['connected_user']) && is_array($_SESSION['connected_user'])) {
     $currentUserId = intval($_SESSION['connected_user']['id']);
