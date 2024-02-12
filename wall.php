@@ -1,10 +1,9 @@
 <?php
 include 'config.php';
-
+include 'follow.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-    
 <head>
     <meta charset="utf-8">
     <title>ReSoC - Mur</title>
@@ -46,27 +45,29 @@ include 'config.php';
     }
     ?>
     <aside>
-    <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
-    <section>
-        <h3>Présentation</h3>
-        <?php if ($userId != 0) : ?>
-            <p>Sur cette page vous trouverez tous les messages de l'utilisatrice : <?php echo $user['alias'] ?>
-                (n° <?php echo $user['id'] ?>)
-            </p>
-        <?php endif; ?>
-        <!-- Le bouton "Écrire un message" redirige vers la page d'écriture de message en incluant l'ID de l'utilisateur -->
-
-    <button onclick="location.href='send_post.php?user_id=<?php echo $userId; ?>'">Écrire un message</button>
-
-        <!-- Formulaire d'abonnement à l'utilisateur -->
-
-        <form id="subscribe-form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-            <input type="hidden" name="user_id" value="<?php echo $userId; ?>">
-            <!-- Le bouton "Devenir Suiveur" soumet le formulaire pour suivre l'utilisateur -->
-            <button id="follow" type="submit">Devenir Suiveur</button>
-        </form>
-    </section>
-</aside>
+        <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+        <section>
+            <h3>Présentation</h3>
+            <?php if ($userId != 0) : ?>
+                <p>Sur cette page vous trouverez tous les messages de l'utilisatrice : <?php echo $user['alias'] ?>
+                    (n° <?php echo $user['id'] ?>)
+                </p>
+                <!-- Afficher le bouton "Suivre ce profil" uniquement si l'utilisateur connecté est différent de l'utilisateur du mur -->
+                <?php if ($_SESSION['connected_user']['id'] !== $userId && $_SESSION['connected_user']['id'] !== 0) : ?>
+                    <form id="follow-form" method="post" action="follow.php">
+                        <input type="hidden" name="user_id" value="<?php echo $userId; ?>">
+                        <button id="follow-profile" type="submit">Suivre ce profil</button>
+                    </form>
+                <?php endif; ?>
+            <?php endif; ?>
+            <!-- Le bouton "Écrire un message" redirige vers la page d'écriture de message en incluant l'ID de l'utilisateur -->
+            <?php if ($_SESSION['connected_user']['id'] !== 0) : ?>
+                <button onclick="location.href='send_post.php?user_id=<?php echo $userId; ?>'">Écrire un message</button>
+            <?php else : ?>
+                <p>Connectez-vous pour voir votre mur de messages.</p>
+            <?php endif; ?>
+        </section>
+    </aside>
     <main>
         <?php
         // Si l'utilisateur est connecté en tant que Guest (id 0)
@@ -102,7 +103,7 @@ include 'config.php';
                     </div>
                     <footer>
                         <small>♥ <?php echo $post['likes'] ?></small>
-                        <a href="tags.php?tag_id=<?php echo urlencode($post['taglist']); ?>">#<?php echo $post['taglist'] ?></a>
+                        <a href="">#<?php echo $post['taglist'] ?></a>
                     </footer>
                 </article>
             <?php }
