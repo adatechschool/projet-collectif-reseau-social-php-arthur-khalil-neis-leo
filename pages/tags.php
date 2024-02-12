@@ -11,26 +11,11 @@ include '../config/config.php';
     <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-    <header>
-        <img src="../assets/resoc.jpg" alt="Logo de notre réseau social"/>
-        <nav id="menu">
-            <a href="news.php">Actualités</a>
-            <a href="wall.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mur</a>
-            <a href="feed.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Flux</a>
-            <a href="tags.php">Mots-clés</a>
-            <a href="usurpedpost.php?user_id=5">Ecrire</a>
-        </nav>
-        <nav id="user">
-            <a href="#">Profil</a>
-            <ul>
-                <li><a href="settings.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Paramètres</a></li>
-                <li><a href="followers.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mes suiveurs</a></li>
-                <li><a href="subscriptions.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mes abonnements</a></li>
-                <li><a href="registration.php?user_id=5">Inscription</a></li>
-                <li><a href="login.php?user_id=5">Connexion</a></li>
-            </ul>
-        </nav>
-    </header>
+
+    <!-- HEADER -->
+    <?php include '../config/index.php' ?>
+    <!-- HEADER -->
+    
     <div id="wrapper">
         <?php
             // Récupération du tag_id depuis l'URL ou utilisation de la valeur par défaut (1)
