@@ -54,9 +54,24 @@ include 'follow.php';
                 </p>
                 <!-- Afficher le bouton "Suivre ce profil" uniquement si l'utilisateur connecté est différent de l'utilisateur du mur -->
                 <?php if ($_SESSION['connected_user']['id'] !== $userId && $_SESSION['connected_user']['id'] !== 0) : ?>
+                    <?php
+                    // Vérifier si l'utilisateur connecté suit déjà l'utilisateur du mur
+                    $queryCheckFollow = "SELECT EXISTS(SELECT 1 FROM followers WHERE followed_user_id = ? AND following_user_id = ?) as is_following";
+                    $statementCheckFollow = $mysqli->prepare($queryCheckFollow);
+                    $statementCheckFollow->bind_param("ii", $userId, $_SESSION['connected_user']['id']);
+                    $statementCheckFollow->execute();
+                    $resultCheckFollow = $statementCheckFollow->get_result();
+                    $rowCheckFollow = $resultCheckFollow->fetch_assoc();
+                    $isFollowing = boolval($rowCheckFollow['is_following']);
+                    ?>
+
                     <form id="follow-form" method="post" action="follow.php">
                         <input type="hidden" name="user_id" value="<?php echo $userId; ?>">
-                        <button id="follow-profile" type="submit">Suivre ce profil</button>
+                        <?php if ($isFollowing) : ?>
+                            <button id="follow-profile" type="submit">Ne plus suivre</button>
+                        <?php else : ?>
+                            <button id="follow-profile" type="submit">Suivre ce profil</button>
+                        <?php endif; ?>
                     </form>
                 <?php endif; ?>
             <?php endif; ?>
@@ -103,7 +118,17 @@ include 'follow.php';
                     </div>
                     <footer>
                         <small>♥ <?php echo $post['likes'] ?></small>
-                        <a href="">#<?php echo $post['taglist'] ?></a>
+                       
+                        <?php foreach (explode(',', $post['taglist']) as $tag): ?>
+        <?php
+            // Requête SQL pour obtenir l'ID numérique du tag
+            $tagQuery = "SELECT id FROM tags WHERE label = '$tag'";
+            $tagResult = $mysqli->query($tagQuery);
+            $tagRow = $tagResult->fetch_assoc();
+            $tagId = $tagRow['id'];
+        ?>
+        <a href="tags.php?tag_id=<?php echo $tagId; ?>"><?php echo '#' . $tag; ?></a>
+    <?php endforeach; ?>
                     </footer>
                 </article>
             <?php }
