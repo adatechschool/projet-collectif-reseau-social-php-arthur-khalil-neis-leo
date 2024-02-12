@@ -1,5 +1,5 @@
 <?php
-    include 'config.php';
+include '../config/config.php';
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +12,7 @@
 </head>
 <body>
     <header>
-        <img src="resoc.jpg" alt="Logo de notre réseau social"/>
+        <img src="../assets/resoc.jpg" alt="Logo de notre réseau social"/>
         <nav id="menu">
             <a href="news.php">Actualités</a>
             <a href="wall.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mur</a>
@@ -36,7 +36,7 @@
             // Récupération du tag_id depuis l'URL ou utilisation de la valeur par défaut (1)
             $tagId = isset($_GET['tag_id']) ? intval($_GET['tag_id']) : 1;
 
-            include 'userco.php';
+            include '../config/userco.php';
         ?>
 
         <aside>
@@ -45,7 +45,7 @@
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 $tag = $lesInformations->fetch_assoc();
             ?>
-            <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+            <img src="../assets/user.jpg" alt="Portrait de l'utilisatrice"/>
             <section>
                 <h3>Présentation</h3>
                 <p>Sur cette page, vous trouverez les derniers messages comportant

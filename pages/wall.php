@@ -1,7 +1,9 @@
 <?php
-include 'config.php';
-include 'follow.php';
+include '../config/config.php';
+include '../config/follow.php';
+
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -12,7 +14,7 @@ include 'follow.php';
 </head>
 <body>
 <header>
-    <img src="resoc.jpg" alt="Logo de notre réseau social"/>
+    <img src="../assets/resoc.jpg" alt="Logo de notre réseau social"/>
     <nav id="menu">
         <a href="news.php">Actualités</a>
         <a href="wall.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mur</a>
@@ -45,7 +47,7 @@ include 'follow.php';
     }
     ?>
     <aside>
-        <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+        <img src="../assets/user.jpg" alt="Portrait de l'utilisatrice"/>
         <section>
             <h3>Présentation</h3>
             <?php if ($userId != 0) : ?>
@@ -54,7 +56,7 @@ include 'follow.php';
                 </p>
                 <!-- Afficher le bouton "Suivre ce profil" uniquement si l'utilisateur connecté est différent de l'utilisateur du mur -->
                 <?php if ($_SESSION['connected_user']['id'] !== $userId && $_SESSION['connected_user']['id'] !== 0) : ?>
-                    <form id="follow-form" method="post" action="follow.php">
+                    <form id="follow-form" method="post" action="../config/follow.php">
                         <input type="hidden" name="user_id" value="<?php echo $userId; ?>">
                         <button id="follow-profile" type="submit">Suivre ce profil</button>
                     </form>

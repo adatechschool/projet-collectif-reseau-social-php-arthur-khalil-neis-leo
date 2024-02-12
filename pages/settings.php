@@ -1,6 +1,6 @@
 <?php
-    include 'config.php';
-    include 'userco.php';
+    include '../config/config.php';
+    include '../config/userco.php';
 
     // Si l'utilisateur clique sur le bouton de déconnexion
     if(isset($_POST['logout_button'])) {
@@ -22,7 +22,7 @@
 </head>
 <body>
     <header>
-        <img src="resoc.jpg" alt="Logo de notre réseau social"/>
+        <img src="../assets/resoc.jpg" alt="Logo de notre réseau social"/>
         <nav id="menu">
             <a href="news.php">Actualités</a>
             <a href="wall.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mur</a>
@@ -41,7 +41,7 @@
     </header>
     <div id="wrapper" class='profile'>
         <aside>
-            <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+            <img src="../assets/user.jpg" alt="Portrait de l'utilisatrice"/>
             <section>
                 <h3>Présentation</h3>
                 <p>Sur cette page vous trouverez les informations de l'utilisatrice n° <?php echo intval($_GET['user_id']) ?></p>

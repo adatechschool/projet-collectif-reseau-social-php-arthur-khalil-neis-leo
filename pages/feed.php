@@ -1,5 +1,5 @@
 <?php
-    include 'config.php';
+    include '../config/config.php';
 ?>
 <!doctype html>
 <html lang="fr">
@@ -11,7 +11,7 @@
 </head>
 <body>
     <header>
-        <img src="resoc.jpg" alt="Logo de notre réseau social"/>
+        <img src="../assets/resoc.jpg" alt="Logo de notre réseau social"/>
         <nav id="menu">
             <a href="news.php">Actualités</a>
             <a href="wall.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mur</a>
@@ -34,7 +34,7 @@
     <div id="wrapper">
         <?php
         $userId = intval($_GET['user_id']);
-        include 'userco.php';
+        include '../config/userco.php';
         ?>
 
         <aside>
@@ -44,7 +44,7 @@
             $user = $lesInformations->fetch_assoc();
             echo "<pre>" . print_r($user, 1) . "</pre>";
             ?>
-            <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+            <img src="../assets/user.jpg" alt="Portrait de l'utilisatrice"/>
             <section>
                 <h3>Présentation</h3>
                 <p>Sur cette page vous trouverez tous les message des utilisatrices

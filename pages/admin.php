@@ -4,11 +4,11 @@
         <meta charset="utf-8">
         <title>ReSoC - Administration</title> 
         <meta name="author" content="Julien Falconnet">
-        <link rel="stylesheet" href="style.css"/>
+        <link rel="stylesheet" href="../pages/style.css"/>
     </head>
     <body>
         <header>
-            <img src="resoc.jpg" alt="Logo de notre réseau social"/>
+            <img src="../assets/resoc.jpg" alt="Logo de notre réseau social"/>
             <nav id="menu">
                 <a href="news.php">Actualités</a>
                 <a href="wall.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mur</a>
@@ -38,7 +38,7 @@
         // on va en avoir besoin pour la suite
         $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
         //verification
-        include 'config.php';
+        include '../config/config.php';
 
         ?>
         <div id="wrapper" class='admin'>

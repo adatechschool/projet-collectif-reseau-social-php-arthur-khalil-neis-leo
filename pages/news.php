@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include '../config/config.php';
 ?>
 
 <!doctype html>
@@ -12,7 +12,7 @@ include 'config.php';
 </head>
 <body>
 <header>
-    <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/></a>
+    <a href='admin.php'><img src="../assets/resoc.jpg" alt="Logo de notre réseau social"/></a>
     <nav id="menu">
         <a href="news.php">Actualités</a>
         <a href="wall.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mur</a>
@@ -33,7 +33,7 @@ include 'config.php';
 </header>
 <div id="wrapper">
     <aside>
-        <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+        <img src="../assets/user.jpg" alt="Portrait de l'utilisatrice"/>
         <section>
             <h3>Présentation</h3>
             <p>Sur cette page vous trouverez les derniers messages de tous les utilisatrices du site.</p>
@@ -45,8 +45,8 @@ include 'config.php';
     <main>
         <?php
         $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
-        include 'userco.php';
-        include 'likes.php';
+        include '../config/userco.php';
+        include '../config/likes.php';
 
         $laQuestionEnSql = "
                 SELECT 

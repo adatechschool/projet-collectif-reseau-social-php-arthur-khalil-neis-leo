@@ -1,5 +1,5 @@
 <?php
-    include 'config.php';
+    include '../config/config.php';
 ?>
 <!doctype html>
 <html lang="fr">
@@ -11,7 +11,7 @@
     </head>
     <body>
         <header>
-            <img src="resoc.jpg" alt="Logo de notre réseau social"/> 
+            <img src="../assets/resoc.jpg" alt="Logo de notre réseau social"/> 
             <nav id="menu">
                 <a href="news.php">Actualités</a>
                 <a href="wall.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mur</a>
@@ -36,11 +36,11 @@
         <div id="wrapper">
         <?php
         $userId = intval($_GET['user_id']);
-        include 'userco.php';
+        include '../config/userco.php';
         ?>
         <div id="wrapper">          
             <aside>
-                <img src = "user.jpg" alt = "Portrait de l'utilisatrice"/>
+                <img src = "../assets/user.jpg" alt = "Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez la liste des personnes qui
@@ -54,7 +54,7 @@
                 // Etape 1: récupérer l'id de l'utilisateur
                 $userId = intval($_GET['user_id']);
                 // Etape 2: se connecter à la base de donnée
-                include 'userco.php';
+                include '../config/userco.php';
                 // Etape 3: récupérer le nom de l'utilisateur
                 $laQuestionEnSql = "
                     SELECT users.*
@@ -70,7 +70,7 @@
                 {
                     ?>
                         <article>
-                    <img src="user.jpg" alt="blason"/>
+                    <img src="../assets/user.jpg" alt="blason"/>
                     <h3><a href="wall.php?user_id=<?php echo $user['id']; ?>"><?php echo $user['alias']; ?></a></h3>
                     <p><?php echo $user['id']; ?></p>
                 </article>

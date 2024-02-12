@@ -1,6 +1,6 @@
 <?php
-include 'config.php';
-include 'userco.php'; // Assurez-vous d'inclure ce fichier pour accéder à $_SESSION
+include '../config/config.php';
+include '../config/userco.php'; // Assurez-vous d'inclure ce fichier pour accéder à $_SESSION
 
 if (!isset($_SESSION['connected_user'])) {
     // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
@@ -19,7 +19,7 @@ if (!isset($_SESSION['connected_user'])) {
 </head>
 <body>
     <header>
-        <img src="resoc.jpg" alt="Logo de notre réseau social"/>
+        <img src="../assets/resoc.jpg" alt="Logo de notre réseau social"/>
         <nav id="menu">
             <a href="news.php">Actualités</a>
             <a href="wall.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mur</a>
@@ -40,7 +40,7 @@ if (!isset($_SESSION['connected_user'])) {
     </header>
     <div id="wrapper">
         <aside>
-            <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+            <img src="../assets/user.jpg" alt="Portrait de l'utilisatrice"/>
             <section>
                 <h3>Présentation</h3>
                 <p>
@@ -75,7 +75,7 @@ if (!isset($_SESSION['connected_user'])) {
             while ($user = $lesInformations->fetch_assoc()) {
             ?>
                 <article>
-                    <img src="user.jpg" alt="blason"/>
+                    <img src="../assets/user.jpg" alt="blason"/>
                     <h3><a href="wall.php?user_id=<?php echo $user['id']; ?>"><?php echo $user['alias']; ?></a></h3>
                     <p><?php echo $user['id']; ?></p>
                 </article>

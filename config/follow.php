@@ -1,6 +1,6 @@
 <?php
-
 include 'config.php';
+
 
 // Vérifier si l'utilisateur est connecté
 if (isset($_SESSION['connected_user']) && is_array($_SESSION['connected_user'])) {
@@ -36,7 +36,7 @@ if (!empty($_POST)) {
 
         if ($success) {
             // Rediriger vers le mur de l'utilisateur suivi
-            header("Location: wall.php?user_id=$userId");
+            header("Location: ../pages/wall.php?user_id=$userId");
             exit();
         } else {
             throw new Exception("Impossible de suivre l'utilisateur.");
@@ -50,7 +50,7 @@ if (!empty($_POST)) {
 
         if ($success) {
             // Rediriger vers le mur de l'utilisateur suivi
-            header("Location: wall.php?user_id=$userId");
+            header("Location: ../pages/wall.php?user_id=$userId");
             exit();
         } else {
             throw new Exception("Impossible d'arrêter de suivre l'utilisateur.");
