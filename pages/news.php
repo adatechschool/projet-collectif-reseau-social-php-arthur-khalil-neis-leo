@@ -33,7 +33,7 @@ include '../config/config.php';
         include '../config/userco.php';
         include '../config/likes.php';
 
-        $laQuestionEnSql = "
+        $newsSQL = "
                 SELECT 
                 posts.id as post_id, 
                 posts.content,
@@ -58,12 +58,12 @@ include '../config/config.php';
                     posts.created DESC  
             ";
 
-        $lesInformations = $mysqli->query($laQuestionEnSql);
+        $lesInformations = $mysqli->query($newsSQL);
 
         if (!$lesInformations) {
             echo "<article>";
             echo("Échec de la requête : " . $mysqli->error);
-            echo("<p>Indice: Vérifiez la requête  SQL suivante dans phpmyadmin<code>$laQuestionEnSql</code></p>");
+            echo("<p>Indice: Vérifiez la requête  SQL suivante dans phpmyadmin<code>$newsSQL</code></p>");
             exit();
         }
 

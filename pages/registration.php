@@ -69,14 +69,14 @@
                         $new_passwd = md5($new_passwd);
                         // NB: md5 est pédagogique mais n'est pas recommandée pour une vraies sécurité
                         //Etape 5 : construction de la requete
-                        $lInstructionSql = "INSERT INTO users (id, email, password, alias) "
+                        $registrationSQL = "INSERT INTO users (id, email, password, alias) "
                                 . "VALUES (NULL, "
                                 . "'" . $new_email . "', "
                                 . "'" . $new_passwd . "', "
                                 . "'" . $new_alias . "'"
                                 . ");";
                         // Etape 6: exécution de la requete
-                        $ok = $mysqli->query($lInstructionSql);
+                        $ok = $mysqli->query($registrationSQL);
                         if ( ! $ok)
                         {
                             echo "L'inscription a échouée : " . $mysqli->error;

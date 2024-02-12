@@ -41,8 +41,8 @@ include '../config/follow.php';
     $userId = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
     if ($userId != 0) {
         // Si un ID d'utilisateur est spécifié dans l'URL, récupérer les informations de cet utilisateur
-        $laQuestionEnSql = "SELECT * FROM users WHERE id = '$userId'";
-        $lesInformations = $mysqli->query($laQuestionEnSql);
+        $wallSQL = "SELECT * FROM users WHERE id = '$userId'";
+        $lesInformations = $mysqli->query($wallSQL);
         $user = $lesInformations->fetch_assoc();
     }
     ?>
@@ -77,7 +77,7 @@ include '../config/follow.php';
             echo '<p>Connectez-vous pour voir votre mur de messages.</p>';
         } else {
             // Sélection des publications de l'utilisateur dont l'ID est spécifié dans l'URL
-            $laQuestionEnSql = "
+            $wallSQL = "
                 SELECT posts.id, posts.content, posts.created, posts.likes, users.alias as author_name, 
                 COUNT(likes.id) as like_number, GROUP_CONCAT(DISTINCT tags.label) AS taglist 
                 FROM posts
@@ -89,7 +89,7 @@ include '../config/follow.php';
                 GROUP BY posts.id
                 ORDER BY posts.created DESC  
             ";
-            $lesInformations = $mysqli->query($laQuestionEnSql);
+            $lesInformations = $mysqli->query($wallSQL);
             if (!$lesInformations) {
                 echo("Échec de la requête : " . $mysqli->error);
             }

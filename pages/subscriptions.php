@@ -41,7 +41,7 @@ if (!isset($_SESSION['connected_user'])) {
             $userId = isset($_GET['user_id']) ? intval($_GET['user_id']) : $_SESSION['connected_user']['id'];
 
             // Etape 3: récupérer le nom de l'utilisateur
-            $laQuestionEnSql = "
+            $subscriptionsSQL = "
                 SELECT users.* 
                 FROM followers 
                 LEFT JOIN users ON users.id=followers.followed_user_id 
@@ -49,7 +49,7 @@ if (!isset($_SESSION['connected_user'])) {
                 GROUP BY users.id
             ";
 
-            $lesInformations = $mysqli->query($laQuestionEnSql);
+            $lesInformations = $mysqli->query($subscriptionsSQL);
 
             if (!$lesInformations) {
                 echo("Échec de la requête : " . $mysqli->error);

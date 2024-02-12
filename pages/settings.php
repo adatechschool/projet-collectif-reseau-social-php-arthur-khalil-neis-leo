@@ -36,7 +36,7 @@
         </aside>
         <main>
             <?php
-            $laQuestionEnSql = "
+            $settingsSQL = "
                 SELECT users.*, 
                 count(DISTINCT posts.id) as totalpost, 
                 count(DISTINCT given.post_id) as totalgiven, 
@@ -48,7 +48,7 @@
                 WHERE users.id = '$userId' 
                 GROUP BY users.id
             ";
-            $lesInformations = $mysqli->query($laQuestionEnSql);
+            $lesInformations = $mysqli->query($settingsSQL);
             if (!$lesInformations) {
                 echo("Échec de la requete : " . $mysqli->error);
             }

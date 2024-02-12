@@ -44,11 +44,11 @@
                     $postContent = $mysqli->real_escape_string($postContent);
 
                     // Construction de la requête SQL
-                    $lInstructionSql = "INSERT INTO posts(user_id, content, created) 
+                    $sendPostSQL = "INSERT INTO posts(user_id, content, created) 
                                         VALUES ({$_SESSION['connected_id']}, '{$postContent}', NOW())";
 
                     // Exécution de la requête
-                    $ok = $mysqli->query($lInstructionSql);
+                    $ok = $mysqli->query($sendPostSQ);
 
                     if (!$ok)
                     {
@@ -60,9 +60,9 @@
 
                     // Associer le tag au message
                     $postId = $mysqli->insert_id;
-                    $lInstructionSql = "INSERT INTO posts_tags(post_id, tag_id) 
+                    $sendPostSQL = "INSERT INTO posts_tags(post_id, tag_id) 
                                         VALUES ($postId, $tagId)";
-                    $ok = $mysqli->query($lInstructionSql);
+                    $ok = $mysqli->query($sendPostSQ);
 
                     if (!$ok)
                     {

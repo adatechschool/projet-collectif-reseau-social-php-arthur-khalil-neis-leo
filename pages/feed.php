@@ -23,8 +23,8 @@
 
         <aside>
             <?php
-            $laQuestionEnSql = "SELECT * FROM `users` WHERE id= '$userId' ";
-            $lesInformations = $mysqli->query($laQuestionEnSql);
+            $feedSQL = "SELECT * FROM `users` WHERE id= '$userId' ";
+            $lesInformations = $mysqli->query($feedSQL);
             $user = $lesInformations->fetch_assoc();
             echo "<pre>" . print_r($user, 1) . "</pre>";
             ?>
@@ -42,7 +42,7 @@
         </aside>
         <main>
             <?php
-            $laQuestionEnSql = "
+            $feedSQL = "
                 SELECT posts.content,
                 posts.created,
                 posts.likes,
@@ -60,7 +60,7 @@
                 GROUP BY posts.id
                 ORDER BY posts.created DESC  
                 ";
-            $lesInformations = $mysqli->query($laQuestionEnSql);
+            $lesInformations = $mysqli->query($feedSQL);
             if ( ! $lesInformations)
             {
                 echo("Échec de la requete : " . $mysqli->error);

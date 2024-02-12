@@ -69,13 +69,13 @@
                         $passwdAVerifier = md5($passwdAVerifier);
                         // NB: md5 est pédagogique mais n'est pas recommandée pour une vraies sécurité
                         //Etape 5 : construction de la requete
-                        $lInstructionSql = "SELECT * "
+                        $loginSQL = "SELECT * "
                                 . "FROM users "
                                 . "WHERE "
                                 . "email LIKE '" . $emailAVerifier . "'"
                                 ;
                         // Etape 6: Vérification de l'utilisateur
-                        $res = $mysqli->query($lInstructionSql);
+                        $res = $mysqli->query($loginSQL);
                         $user = $res->fetch_assoc();
                         if ( ! $user OR $user["password"] != $passwdAVerifier)
                         {

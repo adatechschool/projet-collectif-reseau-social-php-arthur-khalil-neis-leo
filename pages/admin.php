@@ -29,8 +29,8 @@
                 /*
                  * Etape 2 : trouver tous les mots clés
                  */
-                $laQuestionEnSql = "SELECT * FROM `tags` LIMIT 50";
-                $lesInformations = $mysqli->query($laQuestionEnSql);
+                $adminSQL = "SELECT * FROM `tags` LIMIT 50";
+                $lesInformations = $mysqli->query($adminSQL);
                 // Vérification
                 if ( ! $lesInformations)
                 {
@@ -61,8 +61,8 @@
                  * Etape 4 : trouver tous les mots clés
                  * PS: on note que la connexion $mysqli à la base a été faite, pas besoin de la refaire.
                  */
-                $laQuestionEnSql = "SELECT * FROM `users` LIMIT 50";
-                $lesInformations = $mysqli->query($laQuestionEnSql);
+                $adminSQL = "SELECT * FROM `users` LIMIT 50";
+                $lesInformations = $mysqli->query($adminSQL);
     
                 if (!$lesInformations) {
                     echo ("Échec de la requete : " . $mysqli->error);

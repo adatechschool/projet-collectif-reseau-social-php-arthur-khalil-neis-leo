@@ -39,14 +39,14 @@
                 // Etape 2: se connecter à la base de donnée
                 include '../config/userco.php';
                 // Etape 3: récupérer le nom de l'utilisateur
-                $laQuestionEnSql = "
+                $followersSQL = "
                     SELECT users.*
                     FROM followers
                     LEFT JOIN users ON users.id=followers.following_user_id
                     WHERE followers.followed_user_id='$userId'
                     GROUP BY users.id
                     ";
-                $lesInformations = $mysqli->query($laQuestionEnSql);
+                $lesInformations = $mysqli->query($followersSQL);
                 // Etape 4: à vous de jouer
                 //@todo: faire la boucle while de parcours des abonnés et mettre les bonnes valeurs ci dessous 
                 while ($user = $lesInformations->fetch_assoc())

@@ -15,7 +15,7 @@ include '../config/config.php';
     <!-- HEADER -->
     <?php include '../config/index.php' ?>
     <!-- HEADER -->
-    
+
     <div id="wrapper">
         <?php
             // Récupération du tag_id depuis l'URL ou utilisation de la valeur par défaut (1)
@@ -26,8 +26,8 @@ include '../config/config.php';
 
         <aside>
             <?php
-                $laQuestionEnSql = "SELECT * FROM tags WHERE id= '$tagId' ";
-                $lesInformations = $mysqli->query($laQuestionEnSql);
+                $tagsSQL = "SELECT * FROM tags WHERE id= '$tagId' ";
+                $lesInformations = $mysqli->query($tagsSQL);
                 $tag = $lesInformations->fetch_assoc();
             ?>
             <img src="../assets/user.jpg" alt="Portrait de l'utilisatrice"/>
@@ -69,7 +69,7 @@ include '../config/config.php';
 
         <main>
             <?php
-                $laQuestionEnSql = "
+                $tagsSQL = "
                     SELECT posts.content,
                     posts.created,
                     posts.likes,
@@ -87,7 +87,7 @@ include '../config/config.php';
                     GROUP BY posts.id
                     ORDER BY posts.created DESC  
                 ";
-                $lesInformations = $mysqli->query($laQuestionEnSql);
+                $lesInformations = $mysqli->query($tagsSQL);
                 if (!$lesInformations) {
                     echo("Échec de la requete : " . $mysqli->error);
                 }
