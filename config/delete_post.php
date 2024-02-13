@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'config.php';
+include '../config/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if the user is logged in
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     if ($resultPost) {
                         // Post deleted successfully
-                        header("Location: wall.php?user_id=$userId");
+                        header("Location: ../pages/wall.php?user_id=$userId");
                         exit();
                     } else {
                         // Failed to delete post
