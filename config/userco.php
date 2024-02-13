@@ -1,6 +1,6 @@
 <?php
 // Inclure le code de connexion à la base de données
-include '../config/config.php';
+include_once '../config/config.php';
 // Connexion à la base de données
 if ($mysqli->connect_errno) {
     echo("Échec de la connexion : " . $mysqli->connect_error);
