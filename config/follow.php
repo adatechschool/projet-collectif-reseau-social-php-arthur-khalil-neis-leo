@@ -59,6 +59,6 @@ if (!empty($_POST)) {
 } else {
     // Si la requête est incorrecte, renvoyer une erreur 400
     http_response_code(400);
-    echo json_encode(['error' => 'Requête incorrecte']);
+  //  echo json_encode(['error' => 'Requête incorrecte']);
 }
 ?>
