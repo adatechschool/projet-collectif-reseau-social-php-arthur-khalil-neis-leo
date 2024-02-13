@@ -95,9 +95,9 @@ include '../config/config.php';
                     ?>
                     <article>
                         <h3>
-                        <time><strong id="date_post"> 🕚<?php echo $post['created'] ?> 🕚</strong> </time>
+                        <time id="date_post"><strong> 🕚<?php echo $post['created'] ?> 🕚</strong> </time><br>
                         </h3>
-                        <address><a href="wall.php?user_id=<?php echo $post['id'] ?>"><?php echo $post['author_name'] ?></a></address>
+                        <address><a id="name_link" href="wall.php?user_id=<?php echo $post['id'] ?>"><?php echo $post['author_name'] ?></a></address>
                         <div>
                             <p><?php echo $post['content'] ?></p>
                         </div>                                            

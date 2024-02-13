@@ -71,11 +71,11 @@ include '../config/config.php';
             ?>
             <article>
                 <h3>
-                    <time><strong id="date_post"> 🕚<?php echo $post['created'] ?> 🕚</strong> </time>
+                    <time id="date_post"> 🕚<?php echo $post['created'] ?> 🕚 </time><br>
                 </h3>
-                <address><?php echo $post['content'] ?></address>
+                <address><a id="name_link" href="wall.php?user_id=<?php echo $post['author_id'] ?>"><?php echo $post['author_name'] ?></a></address>
                 <div>
-                    <a href="wall.php?user_id=<?php echo $post['author_id'] ?>"><?php echo $post['author_name'] ?></a>
+                    <p><?php echo $post['content'] ?></p>
                     <footer>
     <small id="like_icone">
         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
