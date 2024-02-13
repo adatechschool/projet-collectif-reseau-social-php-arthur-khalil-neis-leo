@@ -26,7 +26,7 @@
             $feedSQL = "SELECT * FROM `users` WHERE id= '$userId' ";
             $lesInformations = $mysqli->query($feedSQL);
             $user = $lesInformations->fetch_assoc();
-            echo "<pre>" . print_r($user, 1) . "</pre>";
+            // echo "<pre>" . print_r($user, 1) . "</pre>";
             ?>
             <img src="../assets/user.jpg" alt="Portrait de l'utilisatrice"/>
             <section>
