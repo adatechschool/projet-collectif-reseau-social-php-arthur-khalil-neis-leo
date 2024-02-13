@@ -77,7 +77,7 @@
                         <p><?php echo $post['content'] ?></p>
                     </div>                                            
                     <footer>
-                        <small>♥ <?php echo $post['likes'] ?></small>
+                        <small id="like_icone">♥ <?php echo $post['likes'] ?></small>
                         <a href="">#<?php echo $post['taglist'] ?></a>
                     </footer>
                 </article>

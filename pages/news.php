@@ -77,11 +77,11 @@ include '../config/config.php';
                 <div>
                     <a href="wall.php?user_id=<?php echo $post['author_id'] ?>"><?php echo $post['author_name'] ?></a>
                     <footer>
-    <small>
+    <small id="like_icone">
         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
             <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
-            <button type="submit" name="like_dislike_button" class="like_button">♥</button>
-            <?php echo $post['likes'] ?>
+            <button type="submit" name="like_dislike_button" class="like_button">♥ <?php echo $post['likes'] ?></button>
+            
         </form>
     </small>
     <?php foreach (explode(',', $post['taglist']) as $tag): ?>

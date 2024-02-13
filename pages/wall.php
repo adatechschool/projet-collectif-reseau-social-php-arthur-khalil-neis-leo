@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p><?php echo $post['content'] ?></p>
                 </div>
                 <footer>
-                    <small>♥ <?php echo $post['likes'] ?></small>
+                    <small id="like_icone">♥ <?php echo $post['likes'] ?></small>
                     <?php foreach (explode(',', $post['taglist']) as $tag) : ?>
                     <?php
                     $tagQuery = "SELECT id FROM tags WHERE label = '$tag'";
