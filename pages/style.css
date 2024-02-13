@@ -284,6 +284,7 @@ form dl dd textarea {
     transition: all .2s;
     text-align: center;
     margin: 15px auto;
+    min-width: 100%;
 
 }
 
