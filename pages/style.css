@@ -310,3 +310,14 @@ form dl dd textarea {
     border-radius: 2em;
     background-color: #c5ced3;
 }
+
+#date_post{
+    border-style: solid;
+    border-width: 1px;
+    border-color: #4E7187;
+    /* min-width: 100%; */
+    text-align: center;
+    border-radius: 2em; 
+    background-color: #b2d5e8;
+    min-width: 2000px;
+}

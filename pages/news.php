@@ -71,7 +71,7 @@ include '../config/config.php';
             ?>
             <article>
                 <h3>
-                    <time><strong><?php echo $post['created'] ?> </strong></time>
+                    <time><strong id="date_post"> 🕚<?php echo $post['created'] ?> 🕚</strong> </time>
                 </h3>
                 <address><?php echo $post['content'] ?></address>
                 <div>

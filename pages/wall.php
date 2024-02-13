@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php while ($post = $lesInformations->fetch_assoc()) : ?>
             <article>
                 <h3>
-                    <time><strong><?php echo $post['created'] ?> </strong></time>
+                <time><strong id="date_post"> 🕚<?php echo $post['created'] ?> 🕚</strong> </time>
                 </h3>
                 <address><a href="wall.php?user_id=<?php echo $post['user_id'] ?>"><?php echo $post['author_name'] ?></a></address>
                 <div>
