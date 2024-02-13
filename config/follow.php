@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include_once 'config.php';
 
 
 // Vérifier si l'utilisateur est connecté

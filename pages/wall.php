@@ -78,7 +78,7 @@ include '../config/follow.php';
                 <?php endif; ?>
 
                 <?php if ($_SESSION['connected_user']['id'] !== 0) : ?>
-                    <button onclick="location.href='send_post.php?user_id=<?php echo $userId; ?>'">Écrire un message</button>
+                    <button id="writemessage" onclick="location.href='send_post.php?user_id=<?php echo $userId; ?>'">Écrire un message</button>
                 <?php else : ?>
                     <p>Connectez-vous pour voir votre mur de messages.</p>
                 <?php endif; ?>
