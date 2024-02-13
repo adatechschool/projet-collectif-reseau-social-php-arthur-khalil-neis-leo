@@ -1,52 +1,63 @@
-<?php  include '../config/config.php';?>
+<?php
+include '../config/config.php';
 
-<?php 
-// Handle form submission to send a post
+// Traitement du formulaire
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['message'])) {
-    // Retrieve post data
+    // Récupérer le contenu du post
     $postContent = $mysqli->real_escape_string($_POST['message']);
-    $tagId = intval($_POST['tag']); // Existing tag ID
-    $newTagLabel = $mysqli->real_escape_string($_POST['new_tag']); // New tag label
 
-    // Check if a new tag label is provided
-    if (!empty($newTagLabel)) {
-        // Check if the new tag already exists
-        $checkQuery = "SELECT id FROM tags WHERE label = '$newTagLabel'";
-        $checkResult = $mysqli->query($checkQuery);
+    // Extraire les hashtags du texte du message avec une expression régulière
+    preg_match_all('/#(\w+)/', $postContent, $matches);
 
-        if ($checkResult && $checkResult->num_rows === 0) {
-            // If the new tag doesn't exist, insert it into the database
-            $insertTagQuery = "INSERT INTO tags (label) VALUES ('$newTagLabel')";
+    // Tableau pour stocker les tags
+    $tags = $matches[1];
+
+    // Parcourir les tags
+    foreach ($tags as $tag) {
+        // Vérifier si le tag existe déjà
+        $checkTagQuery = "SELECT id FROM tags WHERE label = '$tag'";
+        $checkTagResult = $mysqli->query($checkTagQuery);
+
+        if ($checkTagResult && $checkTagResult->num_rows === 0) {
+            // Si le tag n'existe pas, l'ajouter à la base de données
+            $insertTagQuery = "INSERT INTO tags (label) VALUES ('$tag')";
             $insertTagResult = $mysqli->query($insertTagQuery);
 
-            if ($insertTagResult) {
-                // Retrieve the ID of the newly created tag
-                $tagId = $mysqli->insert_id;
-            } else {
-                echo "Error adding new tag: " . $mysqli->error;
+            if (!$insertTagResult) {
+                echo "Erreur en ajoutant le tag : " . $mysqli->error;
             }
-        } else {
-            // If the tag already exists, use its ID
-            $existingTag = $checkResult->fetch_assoc();
-            $tagId = $existingTag['id'];
         }
     }
 
-    // Insert the post into the database
+    // Insérer le post dans la base de données
     $insertPostQuery = "INSERT INTO posts (user_id, content, created) VALUES ({$_SESSION['connected_id']}, '$postContent', NOW())";
     $insertPostResult = $mysqli->query($insertPostQuery);
 
     if ($insertPostResult) {
-        // Associate the tag with the post
+        // Associer les tags au post
         $postId = $mysqli->insert_id;
-        $insertPostTagQuery = "INSERT INTO posts_tags (post_id, tag_id) VALUES ($postId, $tagId)";
-        $insertPostTagResult = $mysqli->query($insertPostTagQuery);
 
-        if (!$insertPostTagResult) {
-            echo "Error associating tag with post: " . $mysqli->error;
+        foreach ($tags as $tag) {
+            // Récupérer l'ID du tag
+            $getTagIdQuery = "SELECT id FROM tags WHERE label = '$tag'";
+            $getTagIdResult = $mysqli->query($getTagIdQuery);
+
+            if ($getTagIdResult && $getTagIdResult->num_rows > 0) {
+                $tagId = $getTagIdResult->fetch_assoc()['id'];
+
+                // Associer le tag au post
+                $insertPostTagQuery = "INSERT INTO posts_tags (post_id, tag_id) VALUES ($postId, $tagId)";
+                $insertPostTagResult = $mysqli->query($insertPostTagQuery);
+
+                if (!$insertPostTagResult) {
+                    echo "Erreur en associant le tag au post : " . $mysqli->error;
+                }
+            }
         }
+
+        echo "Post ajouté avec succès !";
     } else {
-        echo "Error adding post: " . $mysqli->error;
+        echo "Erreur en ajoutant le post : " . $mysqli->error;
     }
 }
 ?>
@@ -97,10 +108,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['message'])) {
 
                     // Construction de la requête SQL
                     $sendPostSQL = "INSERT INTO posts(user_id, content, created) 
-                                        VALUES ({$_SESSION['connected_id']}, '{$postContent}', NOW())";
+                    VALUES ({$_SESSION['connected_id']}, '{$postContent}', NOW())";
 
                     // Exécution de la requête
-                    $ok = $mysqli->query($sendPostSQ);
+                    $ok = $mysqli->query($sendPostSQL);
 
                     if (!$ok)
                     {
@@ -110,43 +121,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['message'])) {
                         echo "Message posté en tant que : " . $_SESSION['connected_user']['alias'];
                     }
 
-                    // Associer le tag au message
+                    // Associer les tags au message
                     $postId = $mysqli->insert_id;
-                    $sendPostSQL = "INSERT INTO posts_tags(post_id, tag_id) 
-                                        VALUES ($postId, $tagId)";
-                    $ok = $mysqli->query($sendPostSQ);
+                    foreach ($tags as $tag) {
+                        // Récupérer l'ID du tag
+                        $getTagIdQuery = "SELECT id FROM tags WHERE label = '$tag'";
+                        $getTagIdResult = $mysqli->query($getTagIdQuery);
 
-                    if (!$ok)
-                    {
-                        echo "Impossible d'associer le tag au message: " . $mysqli->error;
+                        if ($getTagIdResult && $getTagIdResult->num_rows > 0) {
+                            $tagId = $getTagIdResult->fetch_assoc()['id'];
+
+                            // Associer le tag au message
+                            $insertPostTagQuery = "INSERT INTO posts_tags (post_id, tag_id) VALUES ($postId, $tagId)";
+                            $insertPostTagResult = $mysqli->query($insertPostTagQuery);
+
+                            if (!$insertPostTagResult) {
+                                echo "Erreur en associant le tag au message : " . $mysqli->error;
+                            }
+                        }
                     }
                 }
                 ?>                     
-                <form action="send_post.php" method="post">
-                    <textarea name='message' required></textarea><br>
+               <form action="send_post.php" method="post">
+    <textarea name='message' required></textarea><br>
 
-                    <!-- Choose an existing tag -->
-                    <label for='tag'>Choisir un tag existant :</label>
-                    <select name='tag'>
-                        <?php
-                        // Retrieve existing tags from the database
-                        $existingTagsQuery = "SELECT * FROM tags";
-                        $existingTagsResult = $mysqli->query($existingTagsQuery);
+    <!-- Commenter le sélecteur de tag existant -->
+    <!--
+    <label for='tag'>Choisir un tag existant :</label>
+    <select name='tag'>
+        <?php
+        // Récupérer les tags existants depuis la base de données
+        // $existingTagsQuery = "SELECT * FROM tags";
+        // $existingTagsResult = $mysqli->query($existingTagsQuery);
 
-                        while ($tag = $existingTagsResult->fetch_assoc()) {
-                            echo "<option value='{$tag['id']}'>{$tag['label']}</option>";
-                        }
-                        ?>
-                    </select>
+        // while ($tag = $existingTagsResult->fetch_assoc()) {
+        //     echo "<option value='{$tag['id']}'>{$tag['label']}</option>";
+        // }
+        ?>
+    </select>
+    -->
 
-                    <!-- Or enter a new tag -->
-                    <br>
-                    <label for='new_tag'>Nouveau tag :</label>
-                    <input type='text' name='new_tag'>
+    <!-- Commenter la zone pour entrer un nouveau tag -->
+    <!--
+    <br>
+    <label for='new_tag'>Nouveau tag :</label>
+    <input type='text' name='new_tag'>
+    -->
 
-                    <br>
-                    <input type='submit' value='Poster'>
-                </form>
+    <br>
+    <input type='submit' value='Poster'>
+</form>
+
             </article>
         </main>
     </div>
