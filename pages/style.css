@@ -363,3 +363,24 @@ form dl dd textarea {
         border: 1px solid;
         background-color: rgb(252, 176, 176);
     }
+
+    #menu a {
+        text-decoration: none;
+        color: black; /* Ajoutez la couleur du texte selon vos besoins */
+        margin-right: 15px; /* Ajustez la marge à droite selon vos besoins */
+        margin-bottom: 10px; /* Ajustez la marge en bas pour séparer les liens texte */
+        padding: 10px; /* Ajout de rembourrage pour contrôler la hauteur des liens */
+        display: flex;
+        align-items: center;
+    }
+
+    #menu img {
+        border-radius: 50%;
+        width: 80px; /* Ajustez la taille selon vos besoins */
+        height: 80px; /* Ajustez la taille selon vos besoins */
+        margin-right: 10px; /* Marge à droite pour séparer l'image du texte */
+    }
+
+    #user ul li {
+        margin-bottom: 5px; /* Ajustez l'espacement entre les éléments de la liste selon vos besoins */
+    }

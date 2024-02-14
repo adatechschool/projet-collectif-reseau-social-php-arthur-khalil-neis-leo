@@ -90,12 +90,21 @@ include '../config/userco.php';
 
     <div id="wrapper">
         <aside>
-            <img src="../assets/user.jpg" alt="Portrait de l'utilisatrice" />
+    
+        <?php
+        if (isset($_SESSION['connected_user'])) {
+            // Si une image a été téléchargée, utilisez le chemin de l'image téléchargée, sinon utilisez l'image par défaut
+            $userImagePath = isset($_SESSION['connected_user']['image_path']) ? $_SESSION['connected_user']['image_path'] : '../assets/user.jpg';
+        ?>
+            <img src="<?php echo $userImagePath; ?>" alt="Portrait de l'utilisatrice" />
+        <?php
+        }
+        ?>
             <section>
                 <h3>Présentation</h3>
-                <p>Sur cette page, vous trouverez les derniers messages de toutes les utilisatrices du site.</p>
+                <p>Sur cette page, vous trouverez les derniers messages de toutes les utilisateur(trices) du site.</p>
                 <?php if (isset($_SESSION['connected_user'])) : ?>
-                    <span>Connecté en tant que:<?php echo $_SESSION['connected_user']['alias']; ?></span>
+                    <span>Connecté en tant que: <?php echo $_SESSION['connected_user']['alias']; ?></span>
                 <?php endif; ?>
             </section>
         </aside>

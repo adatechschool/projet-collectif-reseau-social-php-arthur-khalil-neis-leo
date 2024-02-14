@@ -25,7 +25,15 @@ if (!isset($_SESSION['connected_user'])) {
     
     <div id="wrapper">
         <aside>
-            <img src="../assets/user.jpg" alt="Portrait de l'utilisatrice"/>
+        <?php
+        if (isset($_SESSION['connected_user'])) {
+            // Si une image a été téléchargée, utilisez le chemin de l'image téléchargée, sinon utilisez l'image par défaut
+            $userImagePath = isset($_SESSION['connected_user']['image_path']) ? $_SESSION['connected_user']['image_path'] : '../assets/user.jpg';
+        ?>
+            <img src="<?php echo $userImagePath; ?>" alt="Portrait de l'utilisatrice" />
+        <?php
+        }
+        ?>
             <section>
                 <h3>Présentation</h3>
                 <p>

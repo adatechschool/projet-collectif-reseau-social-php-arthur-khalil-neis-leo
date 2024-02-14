@@ -17,11 +17,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>ReSoC - Mur</title>
     <meta name="author" content="Julien Falconnet">
     <link rel="stylesheet" href="style.css"/>
+    <style>
+    #menu a {
+        text-decoration: none;
+        color: black; /* Ajoutez la couleur du texte selon vos besoins */
+        margin-right: 15px; /* Ajustez la marge à droite selon vos besoins */
+        margin-bottom: 10px; /* Ajustez la marge en bas pour séparer les liens texte */
+        padding: 10px; /* Ajout de rembourrage pour contrôler la hauteur des liens */
+        display: flex;
+        align-items: center;
+    }
+
+    #menu img {
+        border-radius: 50%;
+        width: 80px; /* Ajustez la taille selon vos besoins */
+        height: 75px; /* Ajustez la taille selon vos besoins */
+        margin-right: 10px; /* Marge à droite pour séparer l'image du texte */
+        margin-left: 10px;
+        margin-top: 8px;
+    }
+
+    #user ul li {
+        margin-bottom: 5px; /* Ajustez l'espacement entre les éléments de la liste selon vos besoins */
+    }
+</style>
 </head>
 <body>
 <header>
     
     <nav id="menu">
+    <img src="../assets/icon_logo.jpg" alt="Icône d'administration">
         <a href='admin.php'>Admin</a>
         <a href="news.php">Actualités</a>
         <a href="wall.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mur</a>
@@ -54,7 +79,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     ?>
     <aside>
-        <img src="../assets/user.jpg" alt="Portrait de l'utilisatrice"/>
+    <?php
+    if (isset($user)) {
+        // Si un utilisateur est spécifié dans l'URL, utilisez le chemin de son image s'il existe, sinon utilisez l'image par défaut
+        $userImagePath = isset($user['image_path']) ? $user['image_path'] : '../assets/user.jpg';
+    ?>
+        <img src="<?php echo $userImagePath; ?>" alt="Portrait de l'utilisatrice" />
+    <?php
+    }
+    ?>
         <section>
             <h3>Présentation</h3>
             <?php if ($userId != 0) : ?>

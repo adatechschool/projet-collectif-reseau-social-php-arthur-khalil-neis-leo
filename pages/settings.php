@@ -1,25 +1,79 @@
 <?php
-    include '../config/config.php';
-    include '../config/userco.php';
+include '../config/config.php';
+include '../config/userco.php';
 
-    // Si l'utilisateur clique sur le bouton de déconnexion
-    if(isset($_POST['logout_button'])) {
-        // Détruire la session
-        session_destroy();
-        // Rediriger vers la page d'accueil ou une autre page après la déconnexion
-        header("Location: news.php");
-        exit();
+// Si l'utilisateur clique sur le bouton de déconnexion
+if (isset($_POST['logout_button'])) {
+    // Détruire la session
+    session_destroy();
+    // Rediriger vers la page d'accueil ou une autre page après la déconnexion
+    header("Location: news.php");
+    exit();
+}
+
+// Si l'utilisateur soumet le formulaire d'upload d'image
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['user_image'])) {
+    $targetDir = "../uploads/"; // Répertoire de destination pour les images uploadées
+    $targetFile = $targetDir . basename($_FILES["user_image"]["name"]);
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+    // Vérifier si le fichier est une image réelle
+    $check = getimagesize($_FILES["user_image"]["tmp_name"]);
+    if (!$check) {
+        echo "Le fichier n'est pas une image.";
+        $uploadOk = 0;
     }
+
+    // Vérifier si le fichier existe déjà
+    if (file_exists($targetFile)) {
+        echo "Désolé, le fichier existe déjà.";
+        $uploadOk = 0;
+    }
+
+    // Vérifier la taille du fichier
+    if ($_FILES["user_image"]["size"] > 500000) {
+        echo "Désolé, votre fichier est trop volumineux.";
+        $uploadOk = 0;
+    }
+
+    // Autoriser certains formats de fichier
+    $allowedFormats = ["jpg", "jpeg", "png", "gif"];
+    if (!in_array($imageFileType, $allowedFormats)) {
+        echo "Désolé, seuls les fichiers JPG, JPEG, PNG et GIF sont autorisés.";
+        $uploadOk = 0;
+    }
+
+    // Vérifier si $uploadOk est défini à 0 par une erreur
+    if ($uploadOk == 0) {
+        echo "Désolé, votre fichier n'a pas été téléchargé.";
+    } else {
+        // Si tout est correct, essayez de télécharger le fichier
+        if (move_uploaded_file($_FILES["user_image"]["tmp_name"], $targetFile)) {
+            echo "Le fichier " . htmlspecialchars(basename($_FILES["user_image"]["name"])) . " a été téléchargé.";
+            // Mettre à jour la base de données avec le chemin de l'image
+            $updateUserImageSQL = "UPDATE users SET image_path = '$targetFile' WHERE id = {$_SESSION['connected_user']['id']}";
+            $updateResult = $mysqli->query($updateUserImageSQL);
+            if (!$updateResult) {
+                echo "Erreur lors de la mise à jour de la base de données.";
+            }
+        } else {
+            echo "Désolé, une erreur s'est produite lors du téléchargement de votre fichier.";
+        }
+    }
+}
 ?>
 
 <!doctype html>
 <html lang="fr">
+
 <head>
     <meta charset="utf-8">
-    <title>ReSoC - Paramètres</title> 
+    <title>ReSoC - Paramètres</title>
     <meta name="author" content="Julien Falconnet">
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
     <!-- HEADER -->
@@ -28,10 +82,12 @@
 
     <div id="wrapper" class='profile'>
         <aside>
-            <img src="../assets/user.jpg" alt="Portrait de l'utilisatrice"/>
+            <?php if (isset($_SESSION['connected_user'])) : ?>
+                <img src="<?php echo isset($_SESSION['connected_user']['image_path']) ? $_SESSION['connected_user']['image_path'] : '../assets/user.jpg'; ?>" alt="Portrait de l'utilisatrice" />
+            <?php endif; ?>
             <section>
                 <h3>Présentation</h3>
-                <p>Sur cette page vous trouverez les informations de l'utilisatrice n° <?php echo intval($_GET['user_id']) ?></p>
+                <p>Sur cette page, vous trouverez les informations de l'utilisatrice n° <?php echo intval($_GET['user_id']) ?></p>
             </section>
         </aside>
         <main>
@@ -50,7 +106,7 @@
             ";
             $lesInformations = $mysqli->query($settingsSQL);
             if (!$lesInformations) {
-                echo("Échec de la requete : " . $mysqli->error);
+                echo ("Échec de la requête : " . $mysqli->error);
             }
             $user = $lesInformations->fetch_assoc();
             ?>
@@ -72,8 +128,15 @@
                 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <button type="submit" name="logout_button">Déconnexion</button>
                 </form>
+
+                <!-- Formulaire d'upload d'image -->
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
+                    <input type="file" name="user_image" accept="image/*">
+                    <input type="submit" value="Charger l'image" name="submit">
+                </form>
             </article>
         </main>
     </div>
 </body>
+
 </html>
