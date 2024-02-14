@@ -14,7 +14,7 @@ a:hover {
 }
 
 body>header {
-    background-color: #fff;
+   
     display: flex;
     width: 80em;
     margin: 0 auto 2em auto;
@@ -30,7 +30,7 @@ body>header #menu {
     display: flex;
     width: 50%;
     align-items: stretch;
-    border-left: 1px solid #99b;
+   
     border-block-end: hidden;
     border-top-left-radius: 2rem;
     background-color: #b2d5e8;
@@ -41,7 +41,7 @@ body>header #menu a {
     flex: 1;
     text-align: center;
     padding-top: 2em;
-    border-right: 1px solid #99b;
+   
 }
 
 body>header a:hover {
@@ -55,7 +55,7 @@ body>header ul {
 body>header #user {
     margin-left: auto;
     flex: 0.2;
-    border-left: 1px solid #99b;
+
 }
 
 body>header #user>a {
@@ -72,7 +72,7 @@ body>header #user ul {
     margin: 0;
     margin-left: -5em;
     background-color: #fff;
-    border: 1px solid #99b;
+   
     z-index: 1;
 }
 
@@ -80,7 +80,7 @@ body>header #user ul li a {
     display: block;
     width: 10em;
     padding: 1em;
-    border-bottom: 1px solid #99b;
+   
 }
 
 body>header #user:hover ul {
@@ -133,10 +133,11 @@ body>header #user:hover ul {
 }
 
 #wrapper main article {
-    background-color: #fff;
+    background-color: #dfdfdf;
     padding: 1em;
     margin-bottom: 1em;
     border-radius: 1em;
+    border: 1px solid;
 }
 
 #wrapper main article h3 {
@@ -323,7 +324,7 @@ form dl dd textarea {
     text-align: center;
     border-radius: 2em; 
     background-color: #b2d5e8;
-    min-width: 2000px;
+
 }
 
     article {

@@ -32,6 +32,48 @@ include '../config/userco.php';
 
         .replies-container {
             margin-left: 50px;
+            
+    
+        }
+        .show_replies_button{
+            background-color: transparent;
+            color: #4E7187;
+    border-color: #4E7187;
+    display: inline-block;
+    padding: .8em 1em .6em 1em;
+    border-style: solid;
+    border-width: 2px;
+    font-family: 'Catamaran', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all .2s;
+    text-align: center;
+    margin-left: 10px;
+    min-width: 100%;
+    border-radius: 1.75em;
+        }
+        .reply_button{
+            background-color: transparent;
+            color: #4E7187;
+    border-color: #4E7187;
+    display: inline-block;
+    padding: .8em 1em .6em 1em;
+    border-style: solid;
+    border-width: 2px;
+    font-family: 'Catamaran', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all .2s;
+    text-align: center;
+    margin-left: 10px;
+    min-width: 100%;
+    border-radius: 1.75em;
         }
 
         .reply-form-container {
