@@ -1,5 +1,5 @@
 <?php
-include '../config/config.php';
+include_once '../config/config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['like_dislike_button'])) {

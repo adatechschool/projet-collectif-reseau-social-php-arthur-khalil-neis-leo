@@ -100,11 +100,11 @@ include '../config/userco.php';
             ?>
                 <article>
                     <h3>
-                        <time><strong id="date_post"> 🕚<?php echo $post['created'] ?> 🕚</strong> </time>
+                        <time id="date_post"> 🕚<?php echo $post['created'] ?> 🕚 </time>
                     </h3>
-                    <address><?php echo $post['content'] ?></address>
+                    <address><a href="wall.php?user_id=<?php echo $post['author_id']; ?>"><?php echo $post['author_name']; ?></a></address>
                     <div>
-                        <a href="wall.php?user_id=<?php echo $post['author_id']; ?>"><?php echo $post['author_name']; ?></a>
+                        <p><?php echo $post['content'] ?></p>
                         <footer>
                             <!-- Bouton "Like" -->
                             <small id="like_icone">

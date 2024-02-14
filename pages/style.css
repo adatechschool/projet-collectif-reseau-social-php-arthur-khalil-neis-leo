@@ -335,3 +335,8 @@ form dl dd textarea {
         padding-top: 10px;
         margin-top: 10px;
     }
+
+    #nav_profil{
+        background-color: #b2d5e8;
+        border-radius: 2rem;
+    }
