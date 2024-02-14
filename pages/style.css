@@ -129,7 +129,7 @@ body>header #user:hover ul {
     flex: 3;
     padding-left: 1em;
     height: 80vh;
-    overflow-y: scroll;
+    overflow-y: scroll hidden;
     border-radius: 1rem;
 }
 
