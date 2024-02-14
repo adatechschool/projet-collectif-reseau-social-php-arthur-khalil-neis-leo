@@ -130,6 +130,7 @@ body>header #user:hover ul {
     padding-left: 1em;
     height: 80vh;
     overflow-y: scroll;
+    border-radius: 1rem;
 }
 
 #wrapper main article {
@@ -158,6 +159,7 @@ body>header #user:hover ul {
 
 #wrapper main article p {
     margin: 0;
+    border-radius: 2rem;
 }
 
 #wrapper main article footer {
@@ -171,19 +173,20 @@ body>header #user:hover ul {
 
 #wrapper.admin {
     flex-direction: row-reverse;
+    border-radius: 1rem;
 }
 
 #wrapper.admin aside {
     flex: 1;
     margin-left: 1em;
-    border-radius: 0;
+    border-radius: 1rem;
     padding: 0;
 }
 
 #wrapper.admin main {
     flex: 2;
     background-color: #fff;
-    border-radius: 0;
+    border-radius: 1rem;
     padding: 0;
 }
 

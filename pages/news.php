@@ -16,7 +16,7 @@ include '../config/userco.php';
             background-color: transparent;
             border: none;
             cursor: pointer;
-            font-size: 1.5em;
+            font-size: 1em;
             color: black;
         }
 
@@ -44,7 +44,7 @@ include '../config/userco.php';
     border-style: solid;
     border-width: 2px;
     font-family: 'Catamaran', sans-serif;
-    font-size: 10px;
+    font-size: 8px;
     font-weight: 600;
     line-height: 1;
     text-decoration: none;
@@ -64,7 +64,7 @@ include '../config/userco.php';
     border-style: solid;
     border-width: 2px;
     font-family: 'Catamaran', sans-serif;
-    font-size: 10px;
+    font-size: 8px;
     font-weight: 600;
     line-height: 1;
     text-decoration: none;
