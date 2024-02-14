@@ -141,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php if ($_SESSION['connected_user']['id'] == $post['user_id']) : ?>
     <form action="../config/delete_post.php" method="post" onsubmit="return confirm('Are you sure you want to delete this post?');">
 <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
-<button type="submit">Delete</button>
+<button id="delete_style" type="submit">Delete</button>
 </form>
 <?php endif; ?>
 </footer>

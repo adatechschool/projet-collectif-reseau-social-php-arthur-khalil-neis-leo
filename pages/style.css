@@ -357,3 +357,9 @@ form dl dd textarea {
         padding-left: 1%;
         padding-right: 1%;
     }
+
+    #delete_style{
+        border-radius: 2em;
+        border: 1px solid;
+        background-color: rgb(252, 176, 176);
+    }
