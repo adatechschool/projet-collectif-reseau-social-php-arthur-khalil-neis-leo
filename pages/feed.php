@@ -33,12 +33,10 @@
             <section>
                 <h3>Présentation</h3>
                 <p>Sur cette page vous trouverez tous les message des utilisatrices
-                    auxquelles est abonnée l'utilisatrice <?php echo $user['alias'] ?>
-                    (n° <?php echo $userId ?>)
+                    auxquelles est abonnée l'utilisatrice <div id="name_link"><?php echo $user['alias'] ?>(n° <?php echo $userId ?>)</div>
+                    
                 </p>
-                <?php if (isset($_SESSION['connected_user'])): ?>
-                    <span>Connecté en tant que: <?php echo $_SESSION['connected_user']['alias']; ?></span>
-                <?php endif; ?>
+                
             </section>
         </aside>
         <main>

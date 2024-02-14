@@ -58,8 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <section>
             <h3>Présentation</h3>
             <?php if ($userId != 0) : ?>
-                <p>Sur cette page vous trouverez tous les messages de l'utilisatrice : <?php echo $user['alias'] ?>
-                    (n° <?php echo $user['id'] ?>)
+                <p>Sur cette page vous trouverez tous les messages de l'utilisatrice :<div id="name_link"> <?php echo $user['alias'] ?> (n° <?php echo $user['id'] ?>)</div>
+                   
                 </p>
 
                 <?php if ($_SESSION['connected_user']['id'] !== $userId && $_SESSION['connected_user']['id'] !== 0) : ?>

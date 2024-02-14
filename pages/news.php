@@ -95,7 +95,7 @@ include '../config/userco.php';
                 <h3>Présentation</h3>
                 <p>Sur cette page, vous trouverez les derniers messages de toutes les utilisatrices du site.</p>
                 <?php if (isset($_SESSION['connected_user'])) : ?>
-                    <span>Connecté en tant que: <?php echo $_SESSION['connected_user']['alias']; ?></span>
+                    <span>Connecté en tant que:<?php echo $_SESSION['connected_user']['alias']; ?></span>
                 <?php endif; ?>
             </section>
         </aside>
