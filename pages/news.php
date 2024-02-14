@@ -150,12 +150,12 @@ include '../config/userco.php';
                         <footer>
                             <!-- Bouton "Like" -->
                             <small>
-        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-            <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
-            <button type="submit" name="like_dislike_button" class="like_button">♥</button>
-            <?php echo $post['likes'] ?>
-        </form>
-    </small>
+                                <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                                    <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
+                                    <button type="submit" name="like_dislike_button" class="like_button">♥</button>
+                                    <?php echo $post['likes'] ?>
+                                </form>
+                            </small>
 
                             <!-- Bouton "Reply" -->
                             <small>
