@@ -13,17 +13,13 @@ a:hover {
     text-decoration: underline;
 }
 
-body>header { 
+body>header {
+    background-color: #fff;
     display: flex;
     width: 80em;
     margin: 0 auto 2em auto;
     padding: 0;
     border-radius: 1em;
-}
-
-#nav_profil{
-    background-color: #b2d5e8;
-    border-radius: 2rem;
 }
 
 body>header img {
@@ -35,9 +31,6 @@ body>header #menu {
     width: 50%;
     align-items: stretch;
     border-left: 1px solid #99b;
-    border-top-left-radius: 2rem;
-    background-color: #b2d5e8;
-    border-radius: 2rem;
 }
 
 body>header #menu a {
@@ -136,7 +129,7 @@ body>header #user:hover ul {
 }
 
 #wrapper main article {
-    background-color: rgba(36, 33, 33, 0.114);
+    background-color: #fff;
     padding: 1em;
     margin-bottom: 1em;
     border-radius: 1em;
@@ -160,7 +153,6 @@ body>header #user:hover ul {
 
 #wrapper main article p {
     margin: 0;
-    font-size: 1.2rem;
 }
 
 #wrapper main article footer {
@@ -181,7 +173,6 @@ body>header #user:hover ul {
     margin-left: 1em;
     border-radius: 0;
     padding: 0;
-    border-radius: 2rem;
 }
 
 #wrapper.admin main {
@@ -189,7 +180,6 @@ body>header #user:hover ul {
     background-color: #fff;
     border-radius: 0;
     padding: 0;
-    border-radius: 2rem;
 }
 
 #wrapper.admin h2 {
@@ -329,19 +319,15 @@ form dl dd textarea {
     text-align: center;
     border-radius: 2em; 
     background-color: #b2d5e8;
-    padding-left: 1%;
-    padding-right: 1%;
+    min-width: 2000px;
 }
 
-#name_link{
-    border-style: solid;
-    border-width: 1px;
-    border-color: #4E7187;
-    /* min-width: 100%; */
-    text-align: center;
-    color: white;
-    border-radius: 2em; 
-    background-color: #3f3c3c54;
-    padding-left: 1%;
-    padding-right: 1%;
-}
+    article {
+        transition: margin-right 0.5s ease; /* Ajustez la durée de l'animation selon vos besoins */
+    }
+
+    .reply {
+        border-top: 1px solid #ccc;
+        padding-top: 10px;
+        margin-top: 10px;
+    }

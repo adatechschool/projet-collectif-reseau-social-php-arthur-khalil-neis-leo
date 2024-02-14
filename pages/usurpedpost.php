@@ -8,9 +8,8 @@
     </head>
     <body>
         <header>
-            
+            <img src="../assets/resoc.jpg" alt="Logo de notre réseau social"/>
             <nav id="menu">
-                <a href='admin.php'>Admin</a>
                 <a href="news.php">Actualités</a>
                 <a href="wall.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mur</a>
                 <a href="feed.php?user_id=5">Flux</a>
@@ -22,7 +21,7 @@
 
             </nav>
             <nav id="user">
-                <a id="nav_profil" href="#">Profil</a>
+                <a href="#">Profil</a>
                 <ul>
                     <li><a href="settings.php?user_id=5">Paramètres</a></li>
                     <li><a href="followers.php?user_id=5">Mes suiveurs</a></li>

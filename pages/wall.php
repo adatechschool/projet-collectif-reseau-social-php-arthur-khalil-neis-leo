@@ -20,9 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 <header>
-    
+    <img src="../assets/resoc.jpg" alt="Logo de notre réseau social"/>
     <nav id="menu">
-        <a href='admin.php'>Admin</a>
         <a href="news.php">Actualités</a>
         <a href="wall.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mur</a>
 
@@ -33,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
     </nav>
     <nav id="user">
-        <a id="nav_profil" href="#">Profil</a>
+        <a href="#">Profil</a>
         <ul>
             <li><a href="settings.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Paramètres</a></li>
             <li><a href="followers.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Mes suiveurs</a></li>
@@ -120,9 +119,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php while ($post = $lesInformations->fetch_assoc()) : ?>
             <article>
                 <h3>
-                <time id="date_post"> 🕚<?php echo $post['created'] ?> 🕚 </time><br>
+                <time><strong id="date_post"> 🕚<?php echo $post['created'] ?> 🕚</strong> </time>
                 </h3>
-                <address><a id="name_link" href="wall.php?user_id=<?php echo $post['user_id'] ?>"><?php echo $post['author_name'] ?></a></address>
+                <address><a href="wall.php?user_id=<?php echo $post['user_id'] ?>"><?php echo $post['author_name'] ?></a></address>
                 <div>
                     <p><?php echo $post['content'] ?></p>
                 </div>
