@@ -149,10 +149,11 @@ include '../config/userco.php';
                         <p><?php echo $post['content'] ?></p>
                         <footer>
                             <!-- Bouton "Like" -->
-                            <small id="like_icone">
-                                <form method="post" action="../config/likes.php">
+                            <small>
+                                <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                                     <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
-                                    <button type="submit" name="like_dislike_button" class="like_button <?php echo ($post['likes'] > 0) ? 'liked' : ''; ?>">♥ <?php echo $post['likes'] ?></button>
+                                    <button type="submit" name="like_dislike_button" class="like_button">♥</button>
+                                    <?php echo $post['likes'] ?>
                                 </form>
                             </small>
 
