@@ -61,7 +61,7 @@ if (!isset($_SESSION['connected_user'])) {
             ?>
                 <article>
                     <img src="../assets/user.jpg" alt="blason"/>
-                    <h3><a href="wall.php?user_id=<?php echo $user['id']; ?>"><?php echo $user['alias']; ?></a></h3>
+                    <h3><a id="name_link" href="wall.php?user_id=<?php echo $user['id']; ?>"><?php echo $user['alias']; ?></a></h3>
                     <p><?php echo $user['id']; ?></p>
                 </article>
             <?php } ?>

@@ -340,3 +340,16 @@ form dl dd textarea {
         background-color: #b2d5e8;
         border-radius: 2rem;
     }
+
+    #name_link{
+        border-style: solid;
+        border-width: 1px;
+        border-color: #4E7187;
+        /* min-width: 100%; */
+        text-align: center;
+        color: white;
+        border-radius: 2em; 
+        background-color: #3f3c3c54;
+        padding-left: 1%;
+        padding-right: 1%;
+    }

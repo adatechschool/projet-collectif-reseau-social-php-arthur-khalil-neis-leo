@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h3>
                 <time id="date_post"> 🕚<?php echo $post['created'] ?> 🕚 </time>
                 </h3>
-                <address><a href="wall.php?user_id=<?php echo $post['user_id'] ?>"><?php echo $post['author_name'] ?></a></address>
+                <address><a id="name_link" href="wall.php?user_id=<?php echo $post['user_id'] ?>"><?php echo $post['author_name'] ?></a></address>
                 <div>
                     <p><?php echo $post['content'] ?></p>
                 </div>
