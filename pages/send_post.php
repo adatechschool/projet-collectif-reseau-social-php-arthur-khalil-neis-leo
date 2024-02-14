@@ -29,36 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['message'])) {
         }
     }
 
-    // Insérer le post dans la base de données
-    $insertPostQuery = "INSERT INTO posts (user_id, content, created) VALUES ({$_SESSION['connected_id']}, '$postContent', NOW())";
-    $insertPostResult = $mysqli->query($insertPostQuery);
-
-    if ($insertPostResult) {
-        // Associer les tags au post
-        $postId = $mysqli->insert_id;
-
-        foreach ($tags as $tag) {
-            // Récupérer l'ID du tag
-            $getTagIdQuery = "SELECT id FROM tags WHERE label = '$tag'";
-            $getTagIdResult = $mysqli->query($getTagIdQuery);
-
-            if ($getTagIdResult && $getTagIdResult->num_rows > 0) {
-                $tagId = $getTagIdResult->fetch_assoc()['id'];
-
-                // Associer le tag au post
-                $insertPostTagQuery = "INSERT INTO posts_tags (post_id, tag_id) VALUES ($postId, $tagId)";
-                $insertPostTagResult = $mysqli->query($insertPostTagQuery);
-
-                if (!$insertPostTagResult) {
-                    echo "Erreur en associant le tag au post : " . $mysqli->error;
-                }
-            }
-        }
-
-        echo "Post ajouté avec succès !";
-    } else {
-        echo "Erreur en ajoutant le post : " . $mysqli->error;
-    }
+    
 }
 ?>
 
