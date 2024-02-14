@@ -35,6 +35,7 @@ body>header #menu {
     width: 50%;
     align-items: stretch;
     border-left: 1px solid #99b;
+    border-block-end: hidden;
     border-top-left-radius: 2rem;
     background-color: #b2d5e8;
     border-radius: 2rem;

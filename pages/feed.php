@@ -19,6 +19,7 @@
         <?php
         $userId = intval($_GET['user_id']);
         include '../config/userco.php';
+        // include '../config/likes.php';
         ?>
 
         <aside>
@@ -70,14 +71,19 @@
                 ?>                
                 <article>
                     <h3>
-                    <time id="date_post"><strong> 🕚<?php echo $post['created'] ?> 🕚</strong> </time><br>
+                    <time id="date_post">🕚<?php echo $post['created'] ?> 🕚 </time><br>
                     </h3>
                     <address><a id="name_link" href="wall.php?user_id=<?php echo $post['id'] ?>"><?php echo $post['author_name'] ?></a></address>
                     <div>
                         <p><?php echo $post['content'] ?></p>
                     </div>                                            
                     <footer>
-                        <small id="like_icone">♥ <?php echo $post['likes'] ?></small>
+                    <small id="like_icone">
+                    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                        <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
+                        <button type="submit" name="like_dislike_button" class="like_button">♥ <?php echo $post['likes'] ?></button>
+                    </form>
+                    </small>
                         <a href="">#<?php echo $post['taglist'] ?></a>
                     </footer>
                 </article>
