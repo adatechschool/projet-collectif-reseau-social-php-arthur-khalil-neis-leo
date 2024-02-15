@@ -112,8 +112,10 @@ body>header #user:hover ul {
     display: flex;
     flex-direction: column;
     justify-content: center; /* Centrer horizontalement les éléments à l'intérieur de aside */
-    align-items: center; 
-    margin: auto;/* Centrer verticalement les éléments à l'intérieur de aside */
+    align-items: top; 
+    height: 20%;
+    
+    /* top: 0; */
 }
 
 

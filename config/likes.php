@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $selectSql = "SELECT likes FROM posts WHERE id = $postId";
                     $selectResult = $mysqli->query($selectSql);
                     $selectRow = $selectResult->fetch_assoc();
-                    echo $selectRow['likes'];
+                    
                 } else {
                     echo "Erreur lors de la mise à jour des likes : " . $mysqli->error;
                 }
@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $selectSql = "SELECT likes FROM posts WHERE id = $postId";
                     $selectResult = $mysqli->query($selectSql);
                     $selectRow = $selectResult->fetch_assoc();
-                    echo $selectRow['likes'];
+                    
                 } else {
                     echo "Erreur lors de la mise à jour des likes : " . $mysqli->error;
                 }
