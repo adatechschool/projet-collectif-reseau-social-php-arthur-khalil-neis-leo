@@ -18,6 +18,7 @@
                 <a href="usurpedpost.php?user_id=5">Ecrire</a>
 
             </nav>
+            <h1 id="lank">- L A N K -</h1>
             <nav id="user">
                 <a id="nav_profil" href="#">Profil</a>
                 <ul>

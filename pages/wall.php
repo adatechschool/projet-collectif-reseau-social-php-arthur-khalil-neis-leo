@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="usurpedpost.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Ecrire</a>
         <?php endif; ?>
     </nav>
+    <h1 id="lank">- L A N K -</h1>
     <nav id="user">
         <a id="nav_profil" href="#">Profil</a>
         <ul>

@@ -373,4 +373,6 @@ form dl dd textarea {
         border-radius: 1em;
         font-family: 'Courier New', Courier, monospace;
         background-color: #3f3c3c54;
+        color: white;
+        padding: auto;
     }
