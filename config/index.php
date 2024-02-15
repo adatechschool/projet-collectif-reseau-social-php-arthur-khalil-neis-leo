@@ -13,6 +13,7 @@
             <a href="usurpedpost.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Ecrire</a>
 
         </nav>
+        <h1 id="lank">- L A N K -</h1>
         <nav id="user">
             <a id="nav_profil" href="#">Profil</a>
             <ul>
