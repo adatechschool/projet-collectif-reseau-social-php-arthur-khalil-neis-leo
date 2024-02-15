@@ -19,8 +19,9 @@
                 <?php if (isset($_SESSION['connected_user'])): ?>
         <span>Connecté en tant que: <?php echo $_SESSION['connected_user']['alias']; ?></span><?php endif; ?>
           
-
+        
             </nav>
+            <h1 id="lank">- L A N K -</h1>
             <nav id="user">
                 <a id="nav_profil" href="#">Profil</a>
                 <ul>
@@ -74,7 +75,7 @@
                         // on ne fait ce qui suit que si un formulaire a été soumis.
                         // Etape 2: récupérer ce qu'il y a dans le formulaire @todo: c'est là que votre travaille se situe
                         // observez le résultat de cette ligne de débug (vous l'effacerez ensuite)
-                        echo "<pre>" . print_r($_POST, 1) . "</pre>";
+                        //echo "<pre>" . print_r($_POST, 1) . "</pre>";
                         // et complétez le code ci dessous en remplaçant les ???
                         $authorId = $_POST['auteur'];
                         $postContent = $_POST['message'];

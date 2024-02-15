@@ -17,36 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>ReSoC - Mur</title>
     <meta name="author" content="Julien Falconnet">
     <link rel="stylesheet" href="style.css"/>
-    <style>
-    #menu a {
-        text-decoration: none;
-        color: black; /* Ajoutez la couleur du texte selon vos besoins */
-        margin-right: 15px; /* Ajustez la marge à droite selon vos besoins */
-        margin-bottom: 10px; /* Ajustez la marge en bas pour séparer les liens texte */
-        padding: 10px; /* Ajout de rembourrage pour contrôler la hauteur des liens */
-        display: flex;
-        align-items: center;
-    }
-
-    #menu img {
-        border-radius: 50%;
-        width: 80px; /* Ajustez la taille selon vos besoins */
-        height: 75px; /* Ajustez la taille selon vos besoins */
-        margin-right: 10px; /* Marge à droite pour séparer l'image du texte */
-        margin-left: 10px;
-        margin-top: 8px;
-    }
-
-    #user ul li {
-        margin-bottom: 5px; /* Ajustez l'espacement entre les éléments de la liste selon vos besoins */
-    }
-</style>
 </head>
 <body>
 <header>
     
     <nav id="menu">
-    <img src="../assets/icon_logo.jpg" alt="Icône d'administration">
         <a href='admin.php'>Admin</a>
         <a href="news.php">Actualités</a>
         <a href="wall.php?user_id=<?php echo $_SESSION['connected_user']['id']; ?>">Mur</a>
@@ -57,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="usurpedpost.php?user_id=<?php echo isset($_GET['user_id']) ? $_GET['user_id'] : 0; ?>">Ecrire</a>
         <?php endif; ?>
     </nav>
+    <h1 id="lank">- L A N K -</h1>
     <nav id="user">
         <a id="nav_profil" href="#">Profil</a>
         <ul>

@@ -14,13 +14,15 @@ a:hover {
 }
 
 body>header {
-   
     display: flex;
     width: 80em;
     margin: 0 auto 2em auto;
     padding: 0;
     border-radius: 1em;
+    /* position: fixed; */
+    /* background-color: pink; */
 }
+
 
 body>header img {
     height: 5em;
@@ -112,8 +114,8 @@ body>header #user:hover ul {
     display: flex;
     flex-direction: column;
     justify-content: center; /* Centrer horizontalement les éléments à l'intérieur de aside */
-    align-items: center; 
-    margin: auto;/* Centrer verticalement les éléments à l'intérieur de aside */
+    align-items: top; 
+    height: 20%;
 }
 
 
@@ -364,23 +366,13 @@ form dl dd textarea {
         background-color: rgb(252, 176, 176);
     }
 
-    #menu a {
-        text-decoration: none;
-        color: black; /* Ajoutez la couleur du texte selon vos besoins */
-        margin-right: 15px; /* Ajustez la marge à droite selon vos besoins */
-        margin-bottom: 10px; /* Ajustez la marge en bas pour séparer les liens texte */
-        padding: 10px; /* Ajout de rembourrage pour contrôler la hauteur des liens */
-        display: flex;
-        align-items: center;
-    }
 
-    #menu img {
-        border-radius: 50%;
-        width: 80px; /* Ajustez la taille selon vos besoins */
-        height: 80px; /* Ajustez la taille selon vos besoins */
-        margin-right: 10px; /* Marge à droite pour séparer l'image du texte */
-    }
-
-    #user ul li {
-        margin-bottom: 5px; /* Ajustez l'espacement entre les éléments de la liste selon vos besoins */
+    h1{
+        margin-left: 5em;
+        border: 1px solid black;
+        border-radius: 1em;
+        font-family: 'Courier New', Courier, monospace;
+        background-color: #3f3c3c54;
+        color: white;
+        padding: auto;
     }

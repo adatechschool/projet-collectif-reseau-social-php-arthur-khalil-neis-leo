@@ -49,15 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['message'])) {
 
     <div id="wrapper">
         <aside>
-        <?php
-        if (isset($_SESSION['connected_user'])) {
-            // Si une image a été téléchargée, utilisez le chemin de l'image téléchargée, sinon utilisez l'image par défaut
-            $userImagePath = isset($_SESSION['connected_user']['image_path']) ? $_SESSION['connected_user']['image_path'] : '../assets/user.jpg';
-        ?>
-            <img src="<?php echo $userImagePath; ?>" alt="Portrait de l'utilisatrice" />
-        <?php
-        }
-        ?>
             <h2>Présentation</h2>
             <p id="SurCettePage">Sur cette page, vous pouvez poster un message en tant que <?php echo $_SESSION['connected_user']['alias']; ?></p>
         </aside>

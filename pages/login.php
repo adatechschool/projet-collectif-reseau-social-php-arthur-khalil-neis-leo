@@ -19,6 +19,7 @@
                 <?php if (isset($_SESSION['connected_user'])): ?>
         <span>Connecté en tant que: <?php echo $_SESSION['connected_user']['alias']; ?></span><?php endif; ?>
             </nav>
+            <h1 id="lank">- L A N K -</h1>
             <nav id="user">
                 <a id="nav_profil" href="#">Profil</a>
                 <ul>
