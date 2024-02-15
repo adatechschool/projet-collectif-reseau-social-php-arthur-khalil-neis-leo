@@ -38,10 +38,6 @@
                     exit();
                 }
 
-                /*
-                 * Etape 3 : @todo : Afficher les mots clés en s'inspirant de ce qui a été fait dans news.php
-                 * Attention à en pas oublier de modifier tag_id=321 avec l'id du mot dans le lien
-                 */
                 while ($tag = $lesInformations->fetch_assoc()) { ?>
                     <article>
                         <h3>
@@ -57,10 +53,7 @@
             <main>
                 <h2>Utilisatrices</h2>
                 <?php
-                /*
-                 * Etape 4 : trouver tous les mots clés
-                 * PS: on note que la connexion $mysqli à la base a été faite, pas besoin de la refaire.
-                 */
+                
                 $adminSQL = "SELECT * FROM `users` LIMIT 50";
                 $lesInformations = $mysqli->query($adminSQL);
     
